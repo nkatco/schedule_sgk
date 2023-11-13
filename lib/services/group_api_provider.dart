@@ -13,7 +13,9 @@ class GroupProvider {
       if (response.statusCode == 200) {
         final List<dynamic> groupJson = json.decode(
             utf8.decode(response.bodyBytes));
-        return groupJson.map((json) => Group.fromJson(json)).toList();
+        final List<Group> groups = groupJson.map((json) => Group.fromJson(json)).toList();
+        groups.sort((a, b) => a.name.compareTo(b.name));
+        return groups;
       } else {
         throw Exception(
             'Error fetching groups. Status code: ${response.statusCode}');

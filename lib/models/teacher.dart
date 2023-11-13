@@ -1,4 +1,6 @@
-class Teacher {
+import 'package:schedule_sgk/models/item.dart';
+
+class Teacher extends Item {
   int id;
   String name;
 
@@ -10,4 +12,6 @@ class Teacher {
       name: json['name'],
     );
   }
+  @override
+  String getAuthor() => name;
 }

@@ -16,7 +16,7 @@ class CabinetProvider {
         final List<Cabinet> cabinets = cabinetJson.entries
             .map((entry) => Cabinet(id: entry.key, name: entry.value))
             .toList();
-
+        cabinets.sort((a, b) => a.name.compareTo(b.name));
         return cabinets;
       } else {
         throw Exception('Error fetching cabinets. Status code: ${response.statusCode}');

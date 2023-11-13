@@ -1,4 +1,6 @@
-class Cabinet {
+import 'package:schedule_sgk/models/item.dart';
+
+class Cabinet extends Item {
   String id;
   String name;
 
@@ -10,4 +12,7 @@ class Cabinet {
       name: json['name'],
     );
   }
+
+  @override
+  String getAuthor() => name;
 }

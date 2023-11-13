@@ -130,7 +130,6 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
                               onChanged: (value) {
                                 setState(() {
                                   _themeBloc.add(ToggleTheme());
-
                                 });
                               }),
                         )

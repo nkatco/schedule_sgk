@@ -10,9 +10,11 @@ import '../bloc/cabinet.bloc/cabinet_bloc.dart';
 import '../bloc/teacher.bloc/teacher_bloc.dart';
 import '../repositories/teacher_repository.dart';
 import '../widgets/cabinet_list.dart';
+import '../widgets/teacher_dialog.dart';
 import '../widgets/teacher_list.dart';
 
 class HomePage extends StatefulWidget {
+
   const HomePage({super.key});
 
   @override
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            elevation: 0,
+            elevation: 1,
             toolbarHeight: 150,
             title: Column(
               children: [
@@ -90,7 +92,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     Column(
                       children: [
                         ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialog(teacherBloc: _teacherBloc,);
+                                },
+                              );
+                            },
                             icon: Image.asset('assets/glass.png', width: 12, height: 12),
                             label: Text('Поиск', style: TextStyle(
                                 color: Theme.of(context).textTheme.labelMedium?.color,
@@ -101,7 +110,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ),
                       ],
                     ),
-                    Image.asset('assets/logo.png', width: 100, height: 100),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Image.asset(
+                        'assets/logo.png',
+                        width: 100,
+                        height: 100,
+                      ),
+                    ),
                     Column(
                       children: [
                         ElevatedButton.icon(
@@ -114,21 +130,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   color: Theme.of(context).textTheme.labelMedium?.color,
                                   fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
                                   fontSize: 12
+                                ),
                               ),
-                              ),
-                              const SizedBox(width: 4),
+                              SizedBox(width: 4),
                               Image.asset('assets/person.png', width: 12, height: 12),
                             ],
                           ),
-                          icon: const SizedBox(width: 0, height: 0),
+                          icon: SizedBox(width: 0, height: 0),
                         ),
                       ],
                     )
                   ],
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                  padding: const EdgeInsets.all(5),
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(15)
@@ -140,7 +156,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         style: TextStyle(
                             color: Theme.of(context).textTheme.labelMedium?.color,
                             fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 11
+                            fontSize: 11.5
                         ),
                       ),
                       ),
@@ -148,7 +164,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         style: TextStyle(
                             color: Theme.of(context).textTheme.labelMedium?.color,
                             fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 11
+                            fontSize: 11.5
                         ),
                       ),
                       ),
@@ -156,7 +172,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         style: TextStyle(
                             color: Theme.of(context).textTheme.labelMedium?.color,
                             fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 11
+                            fontSize: 11.5
                         ),
                       ),
                       ),
@@ -168,7 +184,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
           body: TabBarView(
             controller: _tabController,
-            children: const [
+            children: [
               GroupList(),
               TeacherList(),
               CabinetList(),

@@ -4,6 +4,7 @@ import 'constants.dart';
 ThemeData darkTheme() => ThemeData(
   primaryColor: darkPrimaryColor,
   scaffoldBackgroundColor: darkPrimaryColor,
+  primaryColorDark: darkTabColor,
   cardColor: darkCardColor,
     tabBarTheme: TabBarTheme(
       overlayColor: MaterialStateProperty.resolveWith<Color>(
@@ -19,6 +20,10 @@ ThemeData darkTheme() => ThemeData(
     ),
     textTheme: const TextTheme(
       labelMedium: TextStyle(
+        fontFamily: 'IOSFont-Medium',
+        color: darkTextColor,
+      ),
+      labelSmall: TextStyle(
         fontFamily: 'IOSFont-Medium',
         color: darkTextColor,
       ),
@@ -79,78 +84,84 @@ ThemeData darkTheme() => ThemeData(
 );
 
 ThemeData whiteTheme() => ThemeData(
-    primaryColor: whitePrimaryColor,
-    scaffoldBackgroundColor: whitePrimaryColor,
-    cardColor: whitePrimaryColor,
-    tabBarTheme: TabBarTheme(
-      overlayColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-          return whiteSecondaryColor;
-        },
-      ),
-      indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          shape: BoxShape.rectangle,
-          color: whiteTabColor
-      ),
+  primaryColor: whitePrimaryColor,
+  scaffoldBackgroundColor: whitePrimaryColor,
+  secondaryHeaderColor: whiteTabColor,
+  cardColor: whitePrimaryColor,
+  primaryColorDark: whiteTabColor,
+  tabBarTheme: TabBarTheme(
+    overlayColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+        return whiteSecondaryColor;
+      },
     ),
-    textTheme: const TextTheme(
-      labelMedium: TextStyle(
-        fontFamily: 'IOSFont-Medium',
-        color: whiteTextColor,
-      ),
+    indicator: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        shape: BoxShape.rectangle,
+        color: whiteTabColor
     ),
-    textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.pressed)) {
-                  return whiteCardColorPressed;
-                } else {
-                  return whiteCardColor;
-                }
-              },
-            )
-        )
+  ),
+  textTheme: const TextTheme(
+    labelMedium: TextStyle(
+      fontFamily: 'IOSFont-Medium',
+      color: whiteTextColor,
     ),
-    iconButtonTheme: IconButtonThemeData(
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+    labelSmall: TextStyle(
+      fontFamily: 'IOSFont-Medium',
+      color: whiteTextColor,
+    ),
+  ),
+  textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed)) {
+                return whiteCardColorPressed;
+              } else {
+                return whiteCardColor;
+              }
+            },
+          )
+      )
+  ),
+  iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.pressed)) {
-                  return whiteCardColorPressed;
-                } else {
-                  return whiteCardColor;
-                }
-              },
-            )
-        )
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+          ),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed)) {
+                return whiteCardColorPressed;
+              } else {
+                return whiteCardColor;
+              }
+            },
+          )
+      )
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.pressed)) {
-                  return whiteCardColorPressed;
-                } else {
-                  return whiteCardColor;
-                }
-              },
-            )
-        )
-    ),
-    appBarTheme: const AppBarTheme(
-        color: whiteAppBarColor
-    ),
-    indicatorColor: whiteTextColor,
+          ),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed)) {
+                return whiteCardColorPressed;
+              } else {
+                return whiteCardColor;
+              }
+            },
+          )
+      )
+  ),
+  appBarTheme: const AppBarTheme(
+      color: whiteAppBarColor
+  ),
+  indicatorColor: whiteTextColor,
 );

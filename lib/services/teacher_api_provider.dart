@@ -12,7 +12,9 @@ class TeacherProvider {
 
       if (response.statusCode == 200) {
         final List<dynamic> teacherJson = json.decode(utf8.decode(response.bodyBytes));
-        return teacherJson.map((json) => Teacher.fromJson(json)).toList();
+        final List<Teacher> teachers = teacherJson.map((json) => Teacher.fromJson(json)).toList();
+        teachers.sort((a, b) => a.name.compareTo(b.name));
+        return teachers;
       } else {
         throw Exception('Error fetching teachers. Status code: ${response.statusCode}');
       }

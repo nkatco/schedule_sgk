@@ -45,6 +45,8 @@ dependencies:
   fluttertoast: ^8.2.4
   firebase_crashlytics: ^3.4.4
   equatable: ^2.0.5
+  intl: ^0.18.1
+  syncfusion_flutter_datepicker: ^23.1.44
 
 dev_dependencies:
   flutter_test:

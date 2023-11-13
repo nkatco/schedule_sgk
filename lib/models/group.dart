@@ -1,4 +1,6 @@
-class Group {
+import 'package:schedule_sgk/models/item.dart';
+
+class Group extends Item {
   int id;
   String name;
 
@@ -10,4 +12,6 @@ class Group {
       name: json['name'],
     );
   }
+  @override
+  String getAuthor() => name;
 }
