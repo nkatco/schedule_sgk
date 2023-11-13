@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "900034718663",
+    "firebase_url": "https://schedulesgk-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "schedulesgk",
+    "storage_bucket": "schedulesgk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900034718663:android:576af5641675410db407e2",
+        "android_client_info": {
+          "package_name": "org.katco.schedule_sgk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfo07k_iYfhQCGnPswrcsZZ7AyCdVkig0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
