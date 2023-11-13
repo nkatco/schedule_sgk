@@ -1,16 +1,9 @@
 # schedule_sgk
+by nikita katco
 
-by nkatco
+An application for Samara State College. Created using the Dart language, the Flutter framework. The remaining dependencies are listed at the end of the article. 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The application contains a wide range of functionality, including: Schedule output, search, favorite items, switching topics.
+Thanks to @iamLesniak, @masyan_ul
