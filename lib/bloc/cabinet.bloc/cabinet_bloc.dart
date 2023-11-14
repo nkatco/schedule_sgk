@@ -17,6 +17,15 @@ class CabinetBloc extends Bloc<CabinetEvent, CabinetState> {
     emit(CabinetLoadingState());
     try {
       final List<Cabinet> loadedCabinetList = await cabinetRepository.getAllCabinets();
+      loadedCabinetList.sort((a, b) {
+        if (a.favorite == true && b.favorite == false) {
+          return -1;
+        } else if (a.favorite == false && b.favorite == true) {
+          return 1;
+        } else {
+          return a.name.compareTo(b.name);
+        }
+      });
       emit(CabinetLoadedState(loadedCabinet: loadedCabinetList));
     } catch (error) {
       print("Error in CabinetLoadEvent: $error");

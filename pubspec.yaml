@@ -46,12 +46,13 @@ dependencies:
   firebase_crashlytics: ^3.4.4
   equatable: ^2.0.5
   intl: ^0.18.1
+  sqflite: ^2.3.0
+  path: ^1.8.3
   syncfusion_flutter_datepicker: ^23.1.44
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -71,6 +72,9 @@ flutter:
     - assets/settings.png
     - assets/back.png
     - assets/calendar.png
+    - assets/favorite.png
+    - assets/unfavorite.png
+    - assets/icon.png
   fonts:
     - family: IOSFont-light
       fonts:
@@ -78,6 +82,10 @@ flutter:
     - family: IOSFont-medium
       fonts:
         - asset: assets/fonts/SFUIDisplay-Medium.ttf
+
+
+
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

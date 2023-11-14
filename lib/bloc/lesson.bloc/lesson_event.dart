@@ -22,3 +22,6 @@ class LessonLoadEvent extends LessonEvent {
 class LessonClearEvent extends LessonEvent {
 
 }
+class LessonUpdateEvent extends LessonEvent {
+
+}

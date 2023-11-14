@@ -1,9 +1,19 @@
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:schedule_sgk/DAO/group_dao.dart';
+import 'package:schedule_sgk/models/group.dart';
 import 'package:schedule_sgk/pages/home_page.dart';
+import 'package:schedule_sgk/services/database_provider.dart';
 import 'package:schedule_sgk/theme/theme.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'DAO/cabinet_dao.dart';
+import 'DAO/teacher_dao.dart';
+import 'models/cabinet.dart';
+import 'models/teacher.dart';
 
 late bool theme;
 
@@ -17,15 +27,19 @@ void main() async {
         projectId: 'schedulesgk')
   );
 
-  // FlutterError.onError = (errorDetails) {
-  //   FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  // };
-  // PlatformDispatcher.instance.onError = (error, stack) {
-  //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-  //   return true;
-  // };
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   await _loadSwitchValue();
+  await DatabaseProvider.instance.database;
+  GroupDAO().setCashedGroup(List<Group>.empty());
+  TeacherDAO().setCashedTeacher(List<Teacher>.empty());
+  CabinetDAO().setCashedCabinet(List<Cabinet>.empty());
   runApp(MyApp());
 }
 

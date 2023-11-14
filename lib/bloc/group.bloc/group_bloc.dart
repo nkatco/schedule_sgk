@@ -16,6 +16,15 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     emit(GroupLoadingState());
     try {
       final List<Group> loadedGroupList = await groupRepository.getAllGroups();
+      loadedGroupList.sort((a, b) {
+        if (a.favorite == true && b.favorite == false) {
+          return -1;
+        } else if (a.favorite == false && b.favorite == true) {
+          return 1;
+        } else {
+          return a.name.compareTo(b.name);
+        }
+      });
       emit(GroupLoadedState(loadedGroup: loadedGroupList));
     } catch (error) {
       print("Error in GroupLoadEvent: $error");

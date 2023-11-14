@@ -17,6 +17,15 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
     emit(TeacherLoadingState());
     try {
       final List<Teacher> loadedTeacherList = await teacherRepository.getAllTeachers();
+      loadedTeacherList.sort((a, b) {
+        if (a.favorite == true && b.favorite == false) {
+          return -1;
+        } else if (a.favorite == false && b.favorite == true) {
+          return 1;
+        } else {
+          return a.name.compareTo(b.name);
+        }
+      });
       emit(TeacherLoadedState(loadedTeacher: loadedTeacherList));
     } catch (error) {
       print("Error in TeacherLoadEvent: $error");

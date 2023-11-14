@@ -7,9 +7,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_sgk/models/teacher.dart';
 import 'package:schedule_sgk/pages/lessons_page.dart';
 
+import '../DAO/teacher_dao.dart';
+import '../bloc/teacher.bloc/teacher_event.dart';
+import '../repositories/favorites_repository.dart';
+
 class TeacherList extends StatelessWidget {
 
-  const TeacherList({super.key});
+  final FavoritesRepository favoritesRepository = FavoritesRepository();
+  final TeacherDAO teacherDAO = TeacherDAO();
+
+  TeacherList({super.key});
 
   void navigateToLesson(BuildContext context, Teacher teacher) {
     DateTime currentDate = DateTime.now();
@@ -39,6 +46,7 @@ class TeacherList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TeacherBloc, TeacherState>(
         builder: (context, state) {
+          final TeacherBloc teacherBloc = context.read<TeacherBloc>();
           if(state is TeacherEmptyState) {
             return Center(
                 child: Text(
@@ -68,20 +76,42 @@ class TeacherList extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      child: Center(
-                        child: Text(
-                          '${state.loadedTeacher[index]?.name ?? "Неизвестно"}',
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.labelMedium?.color,
-                            fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 14,
+                    InkResponse(
+                      onLongPress: () {
+                        if (state.loadedTeacher[index].favorite == true) {
+                          state.loadedTeacher[index].favorite = false;
+                        } else {
+                          state.loadedTeacher[index].favorite = true;
+                        }
+                        teacherDAO.modifyFavoriteTeacher(state.loadedTeacher[index]);
+                        favoritesRepository.insertFavorite(state.loadedTeacher[index]!.id.toString());
+                        teacherBloc.add(TeacherLoadEvent());
+                      },
+                      onTap: () {
+                        navigateToLesson(context, state.loadedTeacher[index]);
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${state.loadedTeacher[index]?.name ?? "Неизвестно"}',
+                                style: TextStyle(
+                                  color: Theme.of(context).textTheme.labelMedium?.color,
+                                  fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              if (state.loadedTeacher[index]?.favorite == true)
+                                Image.asset('assets/favorite.png', width: 15, height: 15,)
+                            ],
                           ),
                         ),
                       ),

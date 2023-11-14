@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:schedule_sgk/bloc/cabinet.bloc/cabinet_bloc.dart';
+import 'package:schedule_sgk/bloc/cabinet.bloc/cabinet_event.dart';
 import 'package:schedule_sgk/bloc/cabinet.bloc/cabinet_state.dart';
+import 'package:schedule_sgk/repositories/favorites_repository.dart';
 
+import '../DAO/cabinet_dao.dart';
 import '../models/cabinet.dart';
 import '../pages/lessons_page.dart';
 
 class CabinetList extends StatelessWidget {
 
-  const CabinetList({Key? key}) : super(key: key);
+  final FavoritesRepository favoritesRepository = FavoritesRepository();
+  final CabinetDAO cabinetDAO = CabinetDAO();
+
+  CabinetList({Key? key}) : super(key: key);
 
   void navigateToLesson(BuildContext context, Cabinet cabinet) {
     DateTime currentDate = DateTime.now();
@@ -39,6 +45,7 @@ class CabinetList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CabinetBloc, CabinetState>(
       builder: (context, state) {
+        final CabinetBloc cabinetBloc = context.read<CabinetBloc>();
         if (state is CabinetEmptyState) {
           return Center(
             child: Text(
@@ -61,25 +68,44 @@ class CabinetList extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
               itemCount: state.loadedCabinet.length,
               itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  navigateToLesson(context, state.loadedCabinet[index]);
-                },
                 child: Column(
                   children: [
-                    Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      child: Center(
-                        child: Text(
-                          '${state.loadedCabinet[index]?.name ?? "Неизвестно"}',
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.labelMedium?.color,
-                            fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 14,
+                    InkResponse(
+                      onLongPress: () {
+                        if (state.loadedCabinet[index].favorite == true) {
+                          state.loadedCabinet[index].favorite = false;
+                        } else {
+                          state.loadedCabinet[index].favorite = true;
+                        }
+                        cabinetDAO.modifyFavoriteCabinet(state.loadedCabinet[index]);
+                        favoritesRepository.insertFavorite(state.loadedCabinet[index]?.id);
+                        cabinetBloc.add(CabinetLoadEvent());
+                      },
+                      onTap: () {
+                        navigateToLesson(context, state.loadedCabinet[index]);
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${state.loadedCabinet[index]?.name ?? "Неизвестно"}',
+                                style: TextStyle(
+                                  color: Theme.of(context).textTheme.labelMedium?.color,
+                                  fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              if (state.loadedCabinet[index]?.favorite == true)
+                                Image.asset('assets/favorite.png', width: 15, height: 15,)
+                            ],
                           ),
                         ),
                       ),

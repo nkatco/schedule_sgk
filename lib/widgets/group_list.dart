@@ -5,13 +5,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../DAO/group_dao.dart';
+import '../bloc/group.bloc/group_event.dart';
 import '../models/group.dart';
 import '../pages/lessons_page.dart';
+import '../repositories/favorites_repository.dart';
 
 
 class GroupList extends StatelessWidget {
 
-  const GroupList({super.key});
+  final FavoritesRepository favoritesRepository = FavoritesRepository();
+  final GroupDAO groupDAO = GroupDAO();
+
+  GroupList({super.key});
   void navigateToLesson(BuildContext context, Group group) {
     DateTime currentDate = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
@@ -39,7 +45,8 @@ class GroupList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GroupBloc, GroupState>(
-        builder: (context, state) {
+    builder: (context, state) {
+      final GroupBloc groupBloc = context.read<GroupBloc>();
           if(state is GroupEmptyState) {
             return Center(
                 child: Text(
@@ -69,20 +76,42 @@ class GroupList extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        child: Center(
-                          child: Text(
-                            '${state.loadedGroup[index]?.name ?? "Неизвестно"}',
-                            style: TextStyle(
-                              color: Theme.of(context).textTheme.labelMedium?.color,
-                              fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                              fontSize: 14,
+                      InkResponse(
+                        onLongPress: () {
+                          if (state.loadedGroup[index].favorite == true) {
+                            state.loadedGroup[index].favorite = false;
+                          } else {
+                            state.loadedGroup[index].favorite = true;
+                          }
+                          groupDAO.modifyFavoriteGroup(state.loadedGroup[index]);
+                          favoritesRepository.insertFavorite(state.loadedGroup[index]!.id.toString());
+                          groupBloc.add(GroupLoadEvent());
+                        },
+                        onTap: () {
+                          navigateToLesson(context, state.loadedGroup[index]);
+                        },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '${state.loadedGroup[index]?.name ?? "Неизвестно"}',
+                                  style: TextStyle(
+                                    color: Theme.of(context).textTheme.labelMedium?.color,
+                                    fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                if (state.loadedGroup[index]?.favorite == true)
+                                  Image.asset('assets/favorite.png', width: 15, height: 15,)
+                              ],
                             ),
                           ),
                         ),

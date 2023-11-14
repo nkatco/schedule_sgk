@@ -1,14 +1,67 @@
 import 'package:schedule_sgk/bloc/lesson.bloc/lesson_bloc.dart';
+import 'package:schedule_sgk/bloc/lesson.bloc/lesson_event.dart';
 import 'package:schedule_sgk/bloc/lesson.bloc/lesson_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_sgk/models/cabinet.dart';
+import 'package:schedule_sgk/models/teacher.dart';
+
+import '../DAO/cabinet_dao.dart';
+import '../DAO/group_dao.dart';
+import '../DAO/teacher_dao.dart';
+import '../models/group.dart';
+import '../models/item.dart';
+import '../repositories/favorites_repository.dart';
 
 class LessonList extends StatelessWidget {
 
-  final String author;
+  final Item item;
+  final FavoritesRepository favoritesRepository = FavoritesRepository();
 
-  const LessonList({super.key, required this.author});
+  LessonList({super.key, required this.item});
+
+  _loadItem() {
+    if(item is Group) {
+      Group? group = item as Group?;
+      if (group?.favorite == true) {
+        group?.favorite = false;
+      } else {
+        group?.favorite = true;
+      }
+      GroupDAO groupDAO = GroupDAO();
+      groupDAO.modifyFavoriteGroup(group!);
+    } else if(item is Teacher) {
+      Teacher? teacher = item as Teacher?;
+      if (teacher?.favorite == true) {
+        teacher?.favorite = false;
+      } else {
+        teacher?.favorite = true;
+      }
+      TeacherDAO teacherDAO = TeacherDAO();
+      teacherDAO.modifyFavoriteTeacher(teacher!);
+    } else if(item is Teacher) {
+      Teacher? teacher = item as Teacher?;
+      if (teacher?.favorite == true) {
+        teacher?.favorite = false;
+      } else {
+        teacher?.favorite = true;
+      }
+      TeacherDAO teacherDAO = TeacherDAO();
+      teacherDAO.modifyFavoriteTeacher(teacher!);
+    } else if(item is Cabinet) {
+      Cabinet? cabinet = item as Cabinet?;
+      if (cabinet?.favorite == true) {
+        cabinet?.favorite = false;
+      } else {
+        cabinet?.favorite = true;
+      }
+      CabinetDAO cabinetDAO = CabinetDAO();
+      cabinetDAO.modifyFavoriteCabinet(cabinet!);
+    }
+
+    favoritesRepository.insertFavorite(item.getKey());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +103,34 @@ class LessonList extends StatelessWidget {
           if(state is LessonLoadedState) {
             return Column(
               children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                  child: Text(
-                    '$author',
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.labelMedium?.color,
-                      fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                      fontSize: 15,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: Text(
+                        '${item.getAuthor()}',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.labelMedium?.color,
+                          fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                          fontSize: 15,
+                        ),
+                      ),
                     ),
-                  ),
+                    IconButton(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      onPressed: () {
+                        _loadItem();
+                        context.read<LessonBloc>().add(LessonUpdateEvent());
+                      },
+                      icon: Image.asset(
+                        'assets/${item.getFavorite() ? 'favorite' : 'unfavorite'}.png',
+                        width: 35,
+                        height: 35,
+                      ),
+                    ),
+                  ],
                 ),
                 Expanded(
                   child: ListView.builder(

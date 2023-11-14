@@ -160,7 +160,7 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
             ),
           ),
           body: Container(
-            child: LessonList(author: item.getAuthor()),
+            child: LessonList(item: item),
           ),
         )
     );
