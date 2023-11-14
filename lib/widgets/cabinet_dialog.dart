@@ -1,24 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule_sgk/bloc/teacher.bloc/teacher_bloc.dart';
-import 'package:schedule_sgk/widgets/search/teacher_search_list.dart';
+import 'package:schedule_sgk/widgets/search/cabinet_search_list.dart';
 
-import '../bloc/teacher.bloc/teacher_event.dart';
+import '../bloc/cabinet.bloc/cabinet_bloc.dart';
+import '../bloc/cabinet.bloc/cabinet_event.dart';
 
-class TeacherDialog extends StatelessWidget {
-  final TeacherBloc teacherBloc;
 
-  const TeacherDialog({Key? key, required this.teacherBloc}) : super(key: key);
+class CabinetDialog extends StatelessWidget {
+  final CabinetBloc cabinetBloc;
+
+  const CabinetDialog({Key? key, required this.cabinetBloc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: teacherBloc,
+      value: cabinetBloc,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          teacherBloc.add(TeacherLoadEvent());
+          cabinetBloc.add(CabinetLoadEvent());
           Navigator.pop(context);
         },
         child: Stack(
@@ -61,7 +62,7 @@ class TeacherDialog extends StatelessWidget {
                                     padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                                     child: TextField(
                                       onChanged: (searchTerm) {
-                                        teacherBloc.add(TeacherSearchEvent(searchTerm: searchTerm));
+                                        cabinetBloc.add(CabinetSearchEvent(searchTerm: searchTerm));
                                       },
                                       style: TextStyle(
                                         fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
@@ -89,7 +90,7 @@ class TeacherDialog extends StatelessWidget {
                       Container(
                         width: 250,
                         height: 250,
-                        child: TeacherSearchList(),
+                        child: CabinetSearchList(),
                       ),
                     ],
                   ),

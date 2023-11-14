@@ -10,4 +10,8 @@ class CabinetLoadedState extends CabinetState {
   CabinetLoadedState({required this.loadedCabinet});
 }
 
-class CabinetErrorState extends CabinetState {}
+class CabinetErrorState extends CabinetState {
+  final String errorText;
+
+  CabinetErrorState({required this.errorText});
+}

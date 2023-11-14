@@ -8,9 +8,9 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
 
   TeachersRepository teacherRepository;
 
-  TeacherBloc({required this.teacherRepository})
-      : super(TeacherEmptyState()) {
-    _loadTeachers();
+  TeacherBloc({required this.teacherRepository}) : super(TeacherEmptyState()) {
+    on<TeacherLoadEvent>((event, emit) async => _loadTeachers());
+    on<TeacherSearchEvent>((event, emit) async => _searchTeacher(event.searchTerm));
   }
 
   Future<void> _loadTeachers() async {
@@ -20,7 +20,18 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
       emit(TeacherLoadedState(loadedTeacher: loadedTeacherList));
     } catch (error) {
       print("Error in TeacherLoadEvent: $error");
-      emit(TeacherErrorState());
+      emit(TeacherErrorState(errorText: error.toString()));
     }
   }
+  Future<void> _searchTeacher(String searchTerm) async {
+    try {
+      final List<Teacher> searchedGroups =
+      await teacherRepository.searchTeachers(searchTerm);
+      emit(TeacherLoadedState(loadedTeacher: searchedGroups));
+    } catch (error) {
+      print("Error in GroupSearchEvent: $error");
+      emit(TeacherErrorState(errorText: error.toString()));
+    }
+  }
+
 }

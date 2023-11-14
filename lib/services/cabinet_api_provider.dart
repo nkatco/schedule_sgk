@@ -26,4 +26,13 @@ class CabinetProvider {
       throw Exception('Error fetching cabinets');
     }
   }
+  Future<List<Cabinet>> searchCabinets(String searchTerm) async {
+    List<Cabinet> allGroups = await getCabinet();
+    List<Cabinet> searchedGroups = allGroups
+        .where((group) =>
+        group.name.toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
+
+    return searchedGroups;
+  }
 }

@@ -86,11 +86,11 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
                         icon: Image.asset('assets/back.png', width: 14, height: 14,)
                     ),
                   ),
-                  const Text('Настройки',
+                  Text('Настройки',
                     style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 0.6),
-                      fontSize: 15,
-                      fontFamily: 'IOSFont-Medium',
+                        color: Theme.of(context).textTheme.labelMedium?.color,
+                        fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                        fontSize: 15
                     ),
                   ),
                   Container(
@@ -117,9 +117,9 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                           child: Text('Тема',
                             style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 0.6),
-                              fontSize: 14,
-                              fontFamily: 'IOSFont-Medium',
+                                color: Theme.of(context).textTheme.labelMedium?.color,
+                                fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                                fontSize: 15
                             ),
                           ),
                         ),

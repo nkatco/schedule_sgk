@@ -86,11 +86,11 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                     icon: Image.asset('assets/back.png', width: 14, height: 14,)
                 ),
               ),
-              const Text('Профиль',
+              Text('Профиль',
                 style: TextStyle(
-                  color: Color.fromRGBO(255, 255, 255, 0.6),
-                  fontSize: 15,
-                  fontFamily: 'IOSFont-Medium',
+                    color: Theme.of(context).textTheme.labelMedium?.color,
+                    fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                    fontSize: 15
                 ),
               ),
               Container(

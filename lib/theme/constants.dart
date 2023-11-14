@@ -14,13 +14,16 @@ const Color darkSecondaryColor = Color(0x121620A4);
 const Color whiteSecondaryColor = Color(0x121620A4);
 
 const Color darkAppBarColor = Color(0xFF484848);
-const Color whiteAppBarColor = Color(0x121620A4);
+const Color whiteAppBarColor = Color(0xFFE7E8F4);
 
 const Color darkCardColor = Color(0xFF535353);
-const Color whiteCardColor = Color(0xFFF5F5F5);
+const Color whiteCardColor = Color(0xFFE7E8F4);
 
-const Color darkCardColorPressed = Color(0xFF595959);
-const Color whiteCardColorPressed = Color(0xFFE8E8E8);
+const Color darkElevatedColor = Color(0xFF535353);
+const Color whiteElevatedColor = Color(0xFFF5F5F5);
+
+const Color darkElevatedColorPressed = Color(0xFF595959);
+const Color whiteElevatedColorPressed = Color(0xFFEAEAEA);
 
 const Color darkTextColor = Color(0xFFFFFFFF);
 const Color whiteTextColor = Color(0xFF2C2C2C);

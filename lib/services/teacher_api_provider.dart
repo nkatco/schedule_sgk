@@ -23,5 +23,13 @@ class TeacherProvider {
       throw Exception('Error fetching teachers');
     }
   }
+  Future<List<Teacher>> searchTeachers(String searchTerm) async {
+    List<Teacher> allGroups = await getTeacher();
+    List<Teacher> searchedGroups = allGroups
+        .where((group) =>
+        group.name.toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
 
+    return searchedGroups;
+  }
 }

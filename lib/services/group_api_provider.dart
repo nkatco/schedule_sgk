@@ -25,4 +25,13 @@ class GroupProvider {
       throw Exception('Error fetching groups');
     }
   }
+  Future<List<Group>> searchGroups(String searchTerm) async {
+    List<Group> allGroups = await getGroup();
+    List<Group> searchedGroups = allGroups
+        .where((group) =>
+        group.name.toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
+
+    return searchedGroups;
+  }
 }

@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule_sgk/bloc/teacher.bloc/teacher_bloc.dart';
-import 'package:schedule_sgk/widgets/search/teacher_search_list.dart';
+import 'package:schedule_sgk/bloc/group.bloc/group_bloc.dart';
+import 'package:schedule_sgk/widgets/search/group_search_list.dart';
 
-import '../bloc/teacher.bloc/teacher_event.dart';
+import '../bloc/group.bloc/group_event.dart';
 
-class TeacherDialog extends StatelessWidget {
-  final TeacherBloc teacherBloc;
+class GroupDialog extends StatelessWidget {
+  final GroupBloc groupBloc;
 
-  const TeacherDialog({Key? key, required this.teacherBloc}) : super(key: key);
+  const GroupDialog({Key? key, required this.groupBloc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: teacherBloc,
+      value: groupBloc,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          teacherBloc.add(TeacherLoadEvent());
+          groupBloc.add(GroupLoadEvent());
           Navigator.pop(context);
         },
         child: Stack(
@@ -61,7 +61,7 @@ class TeacherDialog extends StatelessWidget {
                                     padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                                     child: TextField(
                                       onChanged: (searchTerm) {
-                                        teacherBloc.add(TeacherSearchEvent(searchTerm: searchTerm));
+                                        groupBloc.add(GroupSearchEvent(searchTerm: searchTerm));
                                       },
                                       style: TextStyle(
                                         fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
@@ -89,7 +89,7 @@ class TeacherDialog extends StatelessWidget {
                       Container(
                         width: 250,
                         height: 250,
-                        child: TeacherSearchList(),
+                        child: GroupSearchList(),
                       ),
                     ],
                   ),

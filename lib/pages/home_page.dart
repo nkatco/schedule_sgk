@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_sgk/bloc/cabinet.bloc/cabinet_event.dart';
 import 'package:schedule_sgk/bloc/group.bloc/group_bloc.dart';
+import 'package:schedule_sgk/bloc/group.bloc/group_event.dart';
 import 'package:schedule_sgk/pages/profile_page.dart';
 import 'package:schedule_sgk/repositories/cabinet_repository.dart';
 import 'package:schedule_sgk/repositories/group_repository.dart';
+import 'package:schedule_sgk/widgets/cabinet_dialog.dart';
 import 'package:schedule_sgk/widgets/group_list.dart';
 
 import '../bloc/cabinet.bloc/cabinet_bloc.dart';
 import '../bloc/teacher.bloc/teacher_bloc.dart';
+import '../bloc/teacher.bloc/teacher_event.dart';
 import '../repositories/teacher_repository.dart';
 import '../widgets/cabinet_list.dart';
+import '../widgets/group_dialog.dart';
 import '../widgets/teacher_dialog.dart';
 import '../widgets/teacher_list.dart';
 
@@ -38,6 +43,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     _groupBloc = GroupBloc(groupRepository: groupRepository);
     _cabinetsBloc = CabinetBloc(cabinetRepository: cabinetRepository);
     _tabController = TabController(length: 3, vsync: this);
+
+    _groupBloc.add(GroupLoadEvent());
+    _teacherBloc.add(TeacherLoadEvent());
+    _cabinetsBloc.add(CabinetLoadEvent());
   }
 
   @override
@@ -70,6 +79,31 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
     );
   }
+  void _showDialog() {
+    int selectedIndex = _tabController.index;
+    if(selectedIndex == 0) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return GroupDialog(groupBloc: _groupBloc,);
+        },
+      );
+    } else if (selectedIndex == 1) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return TeacherDialog(teacherBloc: _teacherBloc,);
+        },
+      );
+    } else if (selectedIndex == 2) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CabinetDialog(cabinetBloc: _cabinetsBloc,);
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +127,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       children: [
                         ElevatedButton.icon(
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CustomDialog(teacherBloc: _teacherBloc,);
-                                },
-                              );
+                              _showDialog();
                             },
                             icon: Image.asset('assets/glass.png', width: 12, height: 12),
                             label: Text('Поиск', style: TextStyle(

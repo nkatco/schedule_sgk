@@ -4,7 +4,6 @@ import 'constants.dart';
 ThemeData darkTheme() => ThemeData(
   primaryColor: darkPrimaryColor,
   scaffoldBackgroundColor: darkPrimaryColor,
-  primaryColorDark: darkTabColor,
   cardColor: darkCardColor,
     tabBarTheme: TabBarTheme(
       overlayColor: MaterialStateProperty.resolveWith<Color>(
@@ -33,9 +32,9 @@ ThemeData darkTheme() => ThemeData(
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
-                  return darkCardColorPressed;
+                  return darkElevatedColorPressed;
                 } else {
-                  return darkCardColor;
+                  return darkElevatedColor;
                 }
               },
             )
@@ -51,9 +50,9 @@ ThemeData darkTheme() => ThemeData(
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
-                  return darkCardColorPressed;
+                  return darkElevatedColorPressed;
                 } else {
-                  return darkCardColor;
+                  return darkElevatedColor;
                 }
               },
             )
@@ -69,9 +68,9 @@ ThemeData darkTheme() => ThemeData(
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
-                  return darkCardColorPressed;
+                  return darkElevatedColorPressed;
                 } else {
-                  return darkCardColor;
+                  return darkElevatedColor;
                 }
               },
             )
@@ -87,7 +86,7 @@ ThemeData whiteTheme() => ThemeData(
   primaryColor: whitePrimaryColor,
   scaffoldBackgroundColor: whitePrimaryColor,
   secondaryHeaderColor: whiteTabColor,
-  cardColor: whitePrimaryColor,
+  cardColor: whiteCardColor,
   primaryColorDark: whiteTabColor,
   tabBarTheme: TabBarTheme(
     overlayColor: MaterialStateProperty.resolveWith<Color>(
@@ -116,9 +115,9 @@ ThemeData whiteTheme() => ThemeData(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return whiteCardColorPressed;
+                return whiteElevatedColorPressed;
               } else {
-                return whiteCardColor;
+                return whiteElevatedColor;
               }
             },
           )
@@ -134,9 +133,9 @@ ThemeData whiteTheme() => ThemeData(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return whiteCardColorPressed;
+                return whiteElevatedColorPressed;
               } else {
-                return whiteCardColor;
+                return whiteElevatedColor;
               }
             },
           )
@@ -152,9 +151,9 @@ ThemeData whiteTheme() => ThemeData(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return whiteCardColorPressed;
+                return whiteElevatedColorPressed;
               } else {
-                return whiteCardColor;
+                return whiteElevatedColor;
               }
             },
           )

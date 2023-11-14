@@ -10,4 +10,8 @@ class TeacherLoadedState extends TeacherState {
   TeacherLoadedState({required this.loadedTeacher});
 }
 
-class TeacherErrorState extends TeacherState {}
+class TeacherErrorState extends TeacherState {
+  final String errorText;
+
+  TeacherErrorState({required this.errorText});
+}

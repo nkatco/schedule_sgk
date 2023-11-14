@@ -8,9 +8,9 @@ class CabinetBloc extends Bloc<CabinetEvent, CabinetState> {
 
   CabinetsRepository cabinetRepository;
 
-  CabinetBloc({required this.cabinetRepository})
-      : super(CabinetEmptyState()) {
-    _loadCabinets();
+  CabinetBloc({required this.cabinetRepository}) : super(CabinetEmptyState()) {
+    on<CabinetLoadEvent>((event, emit) async => _loadCabinets());
+    on<CabinetSearchEvent>((event, emit) async => _searchCabinet(event.searchTerm));
   }
 
   Future<void> _loadCabinets() async {
@@ -20,7 +20,18 @@ class CabinetBloc extends Bloc<CabinetEvent, CabinetState> {
       emit(CabinetLoadedState(loadedCabinet: loadedCabinetList));
     } catch (error) {
       print("Error in CabinetLoadEvent: $error");
-      emit(CabinetErrorState());
+      emit(CabinetErrorState(errorText: error.toString()));
+    }
+  }
+
+  Future<void> _searchCabinet(String searchTerm) async {
+    try {
+      final List<Cabinet> searchedGroups =
+      await cabinetRepository.searchCabinets(searchTerm);
+      emit(CabinetLoadedState(loadedCabinet: searchedGroups));
+    } catch (error) {
+      print("Error in GroupSearchEvent: $error");
+      emit(CabinetErrorState(errorText: error.toString()));
     }
   }
 }
