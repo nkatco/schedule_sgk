@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_sgk/bloc/teacher.bloc/teacher_bloc.dart';
 import 'package:schedule_sgk/widgets/search/teacher_search_list.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../bloc/teacher.bloc/teacher_event.dart';
 
@@ -31,15 +31,15 @@ class TeacherDialog extends StatelessWidget {
                 elevation: 5,
                 color: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.fromLTRB(15, 10, 15, 25),
+                        margin: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 25.h),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Theme.of(context).cardColor,
@@ -51,14 +51,14 @@ class TeacherDialog extends StatelessWidget {
                                 Container(
                                   child: Image.asset(
                                     'assets/glass.png',
-                                    width: 15,
-                                    height: 15,
+                                    width: 15.w,
+                                    height: 15.h,
                                   ),
-                                  padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(25.w, 0.h, 0.w, 0.h),
                                 ),
                                 Expanded(
                                   child: Container(
-                                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h),
                                     child: TextField(
                                       onChanged: (searchTerm) {
                                         teacherBloc.add(TeacherSearchEvent(searchTerm: searchTerm));
@@ -66,7 +66,7 @@ class TeacherDialog extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
                                         color: Theme.of(context).textTheme.labelMedium?.color,
-                                        fontSize: 16,
+                                        fontSize: 16.sp,
                                       ),
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -75,7 +75,7 @@ class TeacherDialog extends StatelessWidget {
                                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF9E9E9E),
-                                          fontSize: 12,
+                                          fontSize: 12.sp,
                                         ),
                                       ),
                                     ),
@@ -87,8 +87,8 @@ class TeacherDialog extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 250,
-                        height: 250,
+                        width: 250.w,
+                        height: 250.h,
                         child: TeacherSearchList(),
                       ),
                     ],

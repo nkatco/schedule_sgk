@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_sgk/bloc/group.bloc/group_bloc.dart';
 import 'package:schedule_sgk/bloc/group.bloc/group_state.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../models/group.dart';
 import '../../pages/lessons_page.dart';
 
 class GroupSearchList extends StatelessWidget {
-  const GroupSearchList({super.key});
+  const GroupSearchList({Key? key});
 
   void navigateToLesson(BuildContext context, Group group) {
     DateTime currentDate = DateTime.now();
@@ -46,7 +47,7 @@ class GroupSearchList extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelMedium?.color,
                 fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                fontSize: 14,
+                fontSize: 14.sp,
               ),
             ),
           );
@@ -54,14 +55,14 @@ class GroupSearchList extends StatelessWidget {
         if (state is GroupLoadingState) {
           return Center(
             child: Container(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.sp),
               child: CircularProgressIndicator(),
             ),
           );
         }
         if (state is GroupLoadedState) {
           return ListView.builder(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            padding: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
             itemCount: state.loadedGroup.length,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
@@ -70,25 +71,25 @@ class GroupSearchList extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    height: 60,
-                    width: 250,
+                    height: 45.h,
+                    width: 220.w,
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    margin: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
                     child: Center(
                       child: Text(
                         '${state.loadedGroup[index]?.name ?? "Unknown"}',
                         style: TextStyle(
                           color: Theme.of(context).textTheme.labelMedium?.color,
                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                          fontSize: 14,
+                          fontSize: 13.sp,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                 ],
               ),
             ),
@@ -101,7 +102,7 @@ class GroupSearchList extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelMedium?.color,
                 fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                fontSize: 14,
+                fontSize: 14.sp,
               ),
             ),
           );

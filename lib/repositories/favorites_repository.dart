@@ -13,6 +13,16 @@ class FavoritesRepository {
     );
   }
 
+  Future<void> deleteFavorite(String key) async {
+    final db = await DatabaseProvider.instance.database;
+
+    await db.delete(
+      'Favorites',
+      where: 'key = ?',
+      whereArgs: [key],
+    );
+  }
+
   Future<bool> isKeyRegistered(String key) async {
     final db = await DatabaseProvider.instance.database;
 

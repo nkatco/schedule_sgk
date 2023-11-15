@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:schedule_sgk/bloc/group.bloc/group_bloc.dart';
 import 'package:schedule_sgk/widgets/search/group_search_list.dart';
 
@@ -13,6 +13,8 @@ class GroupDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return BlocProvider.value(
       value: groupBloc,
       child: GestureDetector(
@@ -24,22 +26,27 @@ class GroupDialog extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.3,
-              left: MediaQuery.of(context).size.width * 0.1,
-              width: MediaQuery.of(context).size.width * 0.8,
+              top: ScreenUtil().screenHeight * 0.3,
+              left: ScreenUtil().screenWidth * 0.1,
+              width: ScreenUtil().screenWidth * 0.8,
               child: Card(
                 elevation: 5,
                 color: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(ScreenUtil().setWidth(16)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.fromLTRB(15, 10, 15, 25),
+                        margin: EdgeInsets.fromLTRB(
+                          ScreenUtil().setWidth(15),
+                          ScreenUtil().setHeight(10),
+                          ScreenUtil().setWidth(15),
+                          ScreenUtil().setHeight(25),
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Theme.of(context).cardColor,
@@ -51,14 +58,24 @@ class GroupDialog extends StatelessWidget {
                                 Container(
                                   child: Image.asset(
                                     'assets/glass.png',
-                                    width: 15,
-                                    height: 15,
+                                    width: ScreenUtil().setWidth(15),
+                                    height: ScreenUtil().setHeight(15),
                                   ),
-                                  padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(
+                                    ScreenUtil().setWidth(25),
+                                    0,
+                                    0,
+                                    0,
+                                  ),
                                 ),
                                 Expanded(
                                   child: Container(
-                                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    padding: EdgeInsets.fromLTRB(
+                                      ScreenUtil().setWidth(15),
+                                      0,
+                                      ScreenUtil().setWidth(0),
+                                      0,
+                                    ),
                                     child: TextField(
                                       onChanged: (searchTerm) {
                                         groupBloc.add(GroupSearchEvent(searchTerm: searchTerm));
@@ -66,7 +83,7 @@ class GroupDialog extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
                                         color: Theme.of(context).textTheme.labelMedium?.color,
-                                        fontSize: 16,
+                                        fontSize: ScreenUtil().setSp(16),
                                       ),
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -75,7 +92,7 @@ class GroupDialog extends StatelessWidget {
                                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF9E9E9E),
-                                          fontSize: 12,
+                                          fontSize: ScreenUtil().setSp(12),
                                         ),
                                       ),
                                     ),
@@ -87,8 +104,8 @@ class GroupDialog extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 250,
-                        height: 250,
+                        width: ScreenUtil().setWidth(250),
+                        height: ScreenUtil().setHeight(250),
                         child: GroupSearchList(),
                       ),
                     ],

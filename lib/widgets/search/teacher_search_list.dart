@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_sgk/bloc/teacher.bloc/teacher_bloc.dart';
 import 'package:schedule_sgk/bloc/teacher.bloc/teacher_state.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../models/teacher.dart';
 import '../../pages/lessons_page.dart';
 
 class TeacherSearchList extends StatelessWidget {
-  const TeacherSearchList({super.key});
+  const TeacherSearchList({Key? key});
 
   void navigateToLesson(BuildContext context, Teacher teacher) {
     DateTime currentDate = DateTime.now();
@@ -46,7 +47,7 @@ class TeacherSearchList extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelMedium?.color,
                 fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                fontSize: 14,
+                fontSize: 14.sp,
               ),
             ),
           );
@@ -54,14 +55,14 @@ class TeacherSearchList extends StatelessWidget {
         if (state is TeacherLoadingState) {
           return Center(
             child: Container(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.sp),
               child: CircularProgressIndicator(),
             ),
           );
         }
         if (state is TeacherLoadedState) {
           return ListView.builder(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            padding: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
             itemCount: state.loadedTeacher.length,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
@@ -70,25 +71,25 @@ class TeacherSearchList extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    height: 60,
-                    width: 250,
+                    height: 45.h,
+                    width: 220.w,
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    margin: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
                     child: Center(
                       child: Text(
                         '${state.loadedTeacher[index]?.name ?? "Unknown"}',
                         style: TextStyle(
                           color: Theme.of(context).textTheme.labelMedium?.color,
                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                          fontSize: 14,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                 ],
               ),
             ),
@@ -101,7 +102,7 @@ class TeacherSearchList extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelMedium?.color,
                 fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                fontSize: 14,
+                fontSize: 14.sp,
               ),
             ),
           );

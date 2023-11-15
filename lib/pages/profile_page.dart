@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:schedule_sgk/pages/home_page.dart';
 import 'package:schedule_sgk/pages/settings_page.dart';
 
@@ -6,8 +7,9 @@ class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
-class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStateMixin {
 
+class _ProfilePageState extends State<ProfilePage>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -62,57 +64,61 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          toolbarHeight: 100,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 50,
-                height: 38,
-                decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .cardColor,
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                child: IconButton(
-                    onPressed: () {
-                      navigateToMain(context);
-                    },
-                    icon: Image.asset('assets/back.png', width: 14, height: 14,)
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        toolbarHeight: ScreenUtil().setHeight(100),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: ScreenUtil().setWidth(48),
+              height: ScreenUtil().setHeight(34),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: IconButton(
+                onPressed: () {
+                  navigateToMain(context);
+                },
+                icon: Image.asset('assets/back.png',
+                    width: ScreenUtil().setWidth(14),
+                    height: ScreenUtil().setHeight(14)),
+              ),
+            ),
+            Text(
+              'Профиль',
+              style: TextStyle(
+                color: Theme.of(context).textTheme.labelMedium?.color,
+                fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                fontSize: ScreenUtil().setSp(13),
+              ),
+            ),
+            Container(
+              width: ScreenUtil().setWidth(48),
+              height: ScreenUtil().setHeight(34),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: IconButton(
+                onPressed: () {
+                  navigateToSettings(context);
+                },
+                icon: Image.asset(
+                  'assets/settings.png',
+                  width: ScreenUtil().setWidth(14),
+                  height: ScreenUtil().setHeight(14),
                 ),
               ),
-              Text('Профиль',
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.labelMedium?.color,
-                    fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                    fontSize: 15
-                ),
-              ),
-              Container(
-                width: 50,
-                height: 38,
-                decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .cardColor,
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                child: IconButton(
-                    onPressed: () {
-                      navigateToSettings(context);
-                    },
-                    icon: Image.asset(
-                      'assets/settings.png', width: 16, height: 16,)
-                ),
-              )
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

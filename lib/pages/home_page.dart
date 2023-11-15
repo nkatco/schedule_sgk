@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:schedule_sgk/bloc/cabinet.bloc/cabinet_event.dart';
 import 'package:schedule_sgk/bloc/group.bloc/group_bloc.dart';
 import 'package:schedule_sgk/bloc/group.bloc/group_event.dart';
@@ -79,6 +80,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
     );
   }
+
   void _showDialog() {
     int selectedIndex = _tabController.index;
     if(selectedIndex == 0) {
@@ -107,6 +109,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return MultiBlocProvider(
         providers: [
           BlocProvider<TeacherBloc>(create: (BuildContext context) => _teacherBloc),
@@ -117,7 +121,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           appBar: AppBar(
             automaticallyImplyLeading: false,
             elevation: 1,
-            toolbarHeight: 150,
+            toolbarHeight: ScreenUtil().setHeight(150),
             title: Column(
               children: [
                 Row(
@@ -129,22 +133,22 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             onPressed: () {
                               _showDialog();
                             },
-                            icon: Image.asset('assets/glass.png', width: 12, height: 12),
+                            icon: Image.asset('assets/glass.png', width: ScreenUtil().setWidth(12), height: ScreenUtil().setHeight(12)),
                             label: Text('Поиск', style: TextStyle(
                                 color: Theme.of(context).textTheme.labelMedium?.color,
                                 fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                fontSize: 12
+                                fontSize: ScreenUtil().setSp(12)
                             ),
                             )
                         ),
                       ],
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(15), 0, 0, 0),
                       child: Image.asset(
                         'assets/logo.png',
-                        width: 100,
-                        height: 100,
+                        width: ScreenUtil().setWidth(100),
+                        height: ScreenUtil().setHeight(100),
                       ),
                     ),
                     Column(
@@ -158,11 +162,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               Text('Профиль', style: TextStyle(
                                   color: Theme.of(context).textTheme.labelMedium?.color,
                                   fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                  fontSize: 12
-                                ),
+                                  fontSize: ScreenUtil().setSp(12)
                               ),
-                              SizedBox(width: 4),
-                              Image.asset('assets/person.png', width: 12, height: 12),
+                              ),
+                              SizedBox(width: ScreenUtil().setWidth(4)),
+                              Image.asset('assets/person.png', width: ScreenUtil().setWidth(12), height: ScreenUtil().setHeight(12)),
                             ],
                           ),
                           icon: SizedBox(width: 0, height: 0),
@@ -172,8 +176,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 25),
-                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, ScreenUtil().setHeight(25)),
+                  padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(15)
@@ -185,7 +189,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         style: TextStyle(
                             color: Theme.of(context).textTheme.labelMedium?.color,
                             fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 11.5
+                            fontSize: ScreenUtil().setSp(10)
                         ),
                       ),
                       ),
@@ -193,7 +197,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         style: TextStyle(
                             color: Theme.of(context).textTheme.labelMedium?.color,
                             fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 11.5
+                            fontSize: ScreenUtil().setSp(10)
                         ),
                       ),
                       ),
@@ -201,7 +205,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         style: TextStyle(
                             color: Theme.of(context).textTheme.labelMedium?.color,
                             fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: 11.5
+                            fontSize: ScreenUtil().setSp(10)
                         ),
                       ),
                       ),

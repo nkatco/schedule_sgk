@@ -1,4 +1,4 @@
-import 'dart:convert';
+  import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:schedule_sgk/models/cabinet.dart';
@@ -26,7 +26,9 @@ class LessonProvider {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(utf8.decode(response.bodyBytes));
         final List<dynamic> lessonJsonList = responseData['lessons'];
-        return lessonJsonList.map((lessonJson) => Lesson.fromJson(lessonJson)).toList();
+        final List<Lesson> lessons = lessonJsonList.map((lessonJson) => Lesson.fromJson(lessonJson)).toList();
+        bool isMonday = DateTime.now().weekday == DateTime.monday;
+        return lessons;
       } else {
         throw Exception('Error fetching lessons. Status code: ${response.statusCode}');
       }

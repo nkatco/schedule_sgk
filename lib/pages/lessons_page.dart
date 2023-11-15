@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:schedule_sgk/bloc/lesson.bloc/lesson_bloc.dart';
 import 'package:schedule_sgk/models/item.dart';
@@ -11,9 +12,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../bloc/lesson.bloc/lesson_event.dart';
 
-
 class LessonsPage extends StatefulWidget {
-
   final Item item;
   final String date;
 
@@ -24,7 +23,6 @@ class LessonsPage extends StatefulWidget {
 }
 
 class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStateMixin {
-
   final lessonRepository = LessonsRepository();
   late LessonBloc _lessonBloc;
 
@@ -73,7 +71,7 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
       context: context,
       builder: (BuildContext builderContext) {
         return Container(
-          height: 300,
+          height: ScreenUtil().setHeight(300),
           child: SfDateRangePicker(
             onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
               Navigator.of(context).pop();
@@ -86,12 +84,13 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
       },
     );
   }
+
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
       if (args.value is DateTime) {
         date = DateFormat('yyyy-MM-dd').format(args.value as DateTime);
       } else if (args.value is PickerDateRange) {
-        date = DateFormat('yyyy-MM-dd').format((args.value as PickerDateRange).startDate!);;
+        date = DateFormat('yyyy-MM-dd').format((args.value as PickerDateRange).startDate!);
       }
     });
 
@@ -104,65 +103,74 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return BlocProvider<LessonBloc>(
-        create: (BuildContext context) => _lessonBloc,
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            toolbarHeight: 100,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton.icon(
-                    onPressed: () {
-                      navigateToHome(context);
-                    },
-                    icon: Image.asset('assets/back.png', width: 12, height: 12),
-                    label: Text('На главную', style: TextStyle(
-                        color: Theme.of(context).textTheme.labelMedium?.color,
-                        fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                        fontSize: 12
-                    ),
-                    )
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                  child: Image.asset(
-                    'assets/logo.png',
-                    width: 100,
-                    height: 100,
+      create: (BuildContext context) => _lessonBloc,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          toolbarHeight: ScreenUtil().setHeight(100),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  navigateToHome(context);
+                },
+                icon: Image.asset(
+                    'assets/back.png',
+                    width: ScreenUtil().setWidth(12),
+                    height: ScreenUtil().setHeight(12)),
+                label: Text(
+                  'На главную',
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.labelMedium?.color,
+                    fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                    fontSize: ScreenUtil().setSp(11),
                   ),
                 ),
-                Column(
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        _selectDate(context);
-                      },
-                      label: Row(
-                        children: [
-                          Text(formatDateTime(DateTime.parse(date)), style: TextStyle(
-                              color: Theme.of(context).textTheme.labelMedium?.color,
-                              fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                              fontSize: 12
-                          ),
-                          ),
-                          const SizedBox(width: 4),
-                          Image.asset('assets/calendar.png', width: 12, height: 12),
-                        ],
-                      ),
-                      icon: const SizedBox(width: 0, height: 0),
-                    ),
-                  ],
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, ScreenUtil().setWidth(20), 0),
+                child: Image.asset(
+                  'assets/logo.png',
+                  width: ScreenUtil().setWidth(100),
+                  height: ScreenUtil().setHeight(100),
                 ),
-              ],
-            ),
+              ),
+              Column(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _selectDate(context);
+                    },
+                    label: Row(
+                      children: [
+                        Text(
+                          formatDateTime(DateTime.parse(date)),
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.labelMedium?.color,
+                            fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                            fontSize: ScreenUtil().setSp(11),
+                          ),
+                        ),
+                        SizedBox(width: ScreenUtil().setWidth(4)),
+                        Image.asset('assets/calendar.png', width: ScreenUtil().setWidth(12), height: ScreenUtil().setHeight(12)),
+                      ],
+                    ),
+                    icon: const SizedBox(width: 0, height: 0),
+                  ),
+                ],
+              ),
+            ],
           ),
-          body: Container(
-            child: LessonList(item: item),
-          ),
-        )
+        ),
+        body: Container(
+          child: LessonList(item: item, dateTime: DateTime.parse(date)),
+        ),
+      ),
     );
   }
 }

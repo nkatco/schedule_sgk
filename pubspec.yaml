@@ -48,6 +48,7 @@ dependencies:
   intl: ^0.18.1
   sqflite: ^2.3.0
   path: ^1.8.3
+  flutter_screenutil: ^5.9.0
   syncfusion_flutter_datepicker: ^23.1.44
 
 dev_dependencies:

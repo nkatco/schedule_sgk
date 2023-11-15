@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:schedule_sgk/bloc/theme.bloc/theme_event.dart';
 import 'package:schedule_sgk/pages/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,12 +9,12 @@ import '../bloc/theme.bloc/theme_bloc.dart';
 import '../bloc/theme.bloc/theme_state.dart';
 
 class SettingsPage extends StatefulWidget {
-
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
-class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderStateMixin {
 
+class _SettingsPageState extends State<SettingsPage>
+    with SingleTickerProviderStateMixin {
   late bool switchValue = false;
   late ThemeBloc _themeBloc;
 
@@ -54,48 +55,53 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return BlocProvider<ThemeBloc>(
-        create: (context) => _themeBloc,
-        child: BlocBuilder<ThemeBloc, ThemeState>(
-            builder: (context, state) {
-            if (state is ThemeUpdated) {
-             switchValue = state.newTheme;
-            }
-            if(state is ThemeLoaded) {
-              switchValue = state.newTheme;
-            }
+      create: (context) => _themeBloc,
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          if (state is ThemeUpdated) {
+            switchValue = state.newTheme;
+          }
+          if (state is ThemeLoaded) {
+            switchValue = state.newTheme;
+          }
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
               elevation: 0,
-              toolbarHeight: 100,
+              toolbarHeight: ScreenUtil().setHeight(100),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: 50,
-                    height: 38,
+                    width: ScreenUtil().setWidth(48),
+                    height: ScreenUtil().setHeight(34),
                     decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(10)
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: IconButton(
-                        onPressed: (){
-                          navigateToProfile(context);
-                        },
-                        icon: Image.asset('assets/back.png', width: 14, height: 14,)
+                      onPressed: () {
+                        navigateToProfile(context);
+                      },
+                      icon: Image.asset('assets/back.png',
+                          width: ScreenUtil().setWidth(14),
+                          height: ScreenUtil().setHeight(14)),
                     ),
                   ),
-                  Text('Настройки',
+                  Text(
+                    'Настройки',
                     style: TextStyle(
-                        color: Theme.of(context).textTheme.labelMedium?.color,
-                        fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                        fontSize: 15
+                      color: Theme.of(context).textTheme.labelMedium?.color,
+                      fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                      fontSize: ScreenUtil().setSp(13.5),
                     ),
                   ),
                   Container(
-                    width: 50,
-                    height: 38,
+                    width: ScreenUtil().setWidth(50),
+                    height: ScreenUtil().setHeight(38),
                   )
                 ],
               ),
@@ -104,27 +110,40 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
               children: [
                 Center(
                   child: Container(
-                    height: 60,
-                    margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    height: ScreenUtil().setHeight(60),
+                    margin: EdgeInsets.fromLTRB(
+                        ScreenUtil().setWidth(20),
+                        ScreenUtil().setHeight(20),
+                        ScreenUtil().setWidth(20),
+                        0),
                     decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(10)
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                          child: Text('Тема',
+                          margin: EdgeInsets.fromLTRB(
+                              ScreenUtil().setWidth(20),
+                              0,
+                              0,
+                              0),
+                          child: Text(
+                            'Тема',
                             style: TextStyle(
-                                color: Theme.of(context).textTheme.labelMedium?.color,
-                                fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                fontSize: 15
+                              color: Theme.of(context).textTheme.labelMedium?.color,
+                              fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                              fontSize: ScreenUtil().setSp(14),
                             ),
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                          margin: EdgeInsets.fromLTRB(
+                              0,
+                              0,
+                              ScreenUtil().setWidth(10),
+                              0),
                           child: Switch(
                               value: switchValue,
                               onChanged: (value) {
@@ -140,8 +159,8 @@ class _SettingsPageState extends State<SettingsPage> with SingleTickerProviderSt
               ],
             ),
           );
-        }
-        )
+        },
+      ),
     );
   }
 }
