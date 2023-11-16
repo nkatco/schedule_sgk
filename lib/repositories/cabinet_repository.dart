@@ -1,3 +1,4 @@
+import 'package:fuzzy/fuzzy.dart';
 import 'package:schedule_sgk/models/cabinet.dart';
 import 'package:schedule_sgk/services/cabinet_api_provider.dart';
 
@@ -30,8 +31,25 @@ class CabinetsRepository {
       return cachedCabinets;
     }
 
-    return cachedCabinets
-        .where((cabinet) => cabinet.name.toLowerCase().contains(searchTerm.toLowerCase()))
-        .toList();
+    List<Cabinet> newTeachers = List.empty();
+
+    var fuse = Fuzzy(
+      cachedCabinets,
+      options: FuzzyOptions(
+        keys: [
+          WeightedKey(
+            getter: (Cabinet item) => item.name,
+            weight: 1.0,
+            name: 'name',
+          ),
+        ],
+        findAllMatches: true,
+        tokenize: true,
+        threshold: 0.3,
+      ),
+    );
+    var results = fuse.search(searchTerm);
+    newTeachers = results.map((result) => result.item).toList();
+    return newTeachers;
   }
 }

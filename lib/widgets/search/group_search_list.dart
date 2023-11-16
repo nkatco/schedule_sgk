@@ -84,7 +84,7 @@ class GroupSearchList extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).textTheme.labelMedium?.color,
                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                          fontSize: 13.sp,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),

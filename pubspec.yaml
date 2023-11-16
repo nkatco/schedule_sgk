@@ -50,6 +50,9 @@ dependencies:
   path: ^1.8.3
   flutter_screenutil: ^5.9.0
   syncfusion_flutter_datepicker: ^23.1.44
+  home_widget: ^0.3.0
+  workmanager: ^0.5.2
+  fuzzy: ^0.5.1
 
 dev_dependencies:
   flutter_test:

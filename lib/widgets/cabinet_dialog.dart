@@ -27,7 +27,7 @@ class CabinetDialog extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: ScreenUtil().screenHeight * 0.3,
+              top: ScreenUtil().screenHeight * 0.2,
               left: ScreenUtil().screenWidth * 0.1,
               width: ScreenUtil().screenWidth * 0.8,
               child: Card(
@@ -46,7 +46,7 @@ class CabinetDialog extends StatelessWidget {
                           ScreenUtil().setWidth(15),
                           ScreenUtil().setHeight(10),
                           ScreenUtil().setWidth(15),
-                          ScreenUtil().setHeight(25),
+                          ScreenUtil().setHeight(15),
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -63,7 +63,7 @@ class CabinetDialog extends StatelessWidget {
                                     height: ScreenUtil().setHeight(15),
                                   ),
                                   padding: EdgeInsets.fromLTRB(
-                                    ScreenUtil().setWidth(25),
+                                    ScreenUtil().setWidth(15),
                                     0,
                                     0,
                                     0,
@@ -72,7 +72,7 @@ class CabinetDialog extends StatelessWidget {
                                 Expanded(
                                   child: Container(
                                     padding: EdgeInsets.fromLTRB(
-                                      ScreenUtil().setWidth(15),
+                                      ScreenUtil().setWidth(10),
                                       0,
                                       0,
                                       0,
@@ -84,7 +84,7 @@ class CabinetDialog extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
                                         color: Theme.of(context).textTheme.labelMedium?.color,
-                                        fontSize: ScreenUtil().setSp(16),
+                                        fontSize: ScreenUtil().setSp(13),
                                       ),
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -93,7 +93,7 @@ class CabinetDialog extends StatelessWidget {
                                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF9E9E9E),
-                                          fontSize: ScreenUtil().setSp(12),
+                                          fontSize: ScreenUtil().setSp(11),
                                         ),
                                       ),
                                     ),
@@ -105,8 +105,8 @@ class CabinetDialog extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: ScreenUtil().setWidth(250),
-                        height: ScreenUtil().setHeight(250),
+                        width: ScreenUtil().setWidth(230),
+                        height: ScreenUtil().setHeight(220),
                         child: CabinetSearchList(),
                       ),
                     ],

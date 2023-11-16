@@ -121,14 +121,14 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
                 },
                 icon: Image.asset(
                     'assets/back.png',
-                    width: ScreenUtil().setWidth(12),
-                    height: ScreenUtil().setHeight(12)),
+                    width: ScreenUtil().setWidth(10),
+                    height: ScreenUtil().setHeight(10)),
                 label: Text(
                   'На главную',
                   style: TextStyle(
                     color: Theme.of(context).textTheme.labelMedium?.color,
                     fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                    fontSize: ScreenUtil().setSp(11),
+                    fontSize: ScreenUtil().setSp(10),
                   ),
                 ),
               ),

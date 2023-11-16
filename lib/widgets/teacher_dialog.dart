@@ -24,7 +24,7 @@ class TeacherDialog extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.3,
+              top: MediaQuery.of(context).size.height * 0.2,
               left: MediaQuery.of(context).size.width * 0.1,
               width: MediaQuery.of(context).size.width * 0.8,
               child: Card(
@@ -39,7 +39,7 @@ class TeacherDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 25.h),
+                        margin: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 15.h),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Theme.of(context).cardColor,
@@ -54,11 +54,11 @@ class TeacherDialog extends StatelessWidget {
                                     width: 15.w,
                                     height: 15.h,
                                   ),
-                                  padding: EdgeInsets.fromLTRB(25.w, 0.h, 0.w, 0.h),
+                                  padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h),
                                 ),
                                 Expanded(
                                   child: Container(
-                                    padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h),
+                                    padding: EdgeInsets.fromLTRB(10.w, 0.h, 0.w, 0.h),
                                     child: TextField(
                                       onChanged: (searchTerm) {
                                         teacherBloc.add(TeacherSearchEvent(searchTerm: searchTerm));
@@ -66,7 +66,7 @@ class TeacherDialog extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
                                         color: Theme.of(context).textTheme.labelMedium?.color,
-                                        fontSize: 16.sp,
+                                        fontSize: 13.sp,
                                       ),
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -75,7 +75,7 @@ class TeacherDialog extends StatelessWidget {
                                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF9E9E9E),
-                                          fontSize: 12.sp,
+                                          fontSize: 11.sp,
                                         ),
                                       ),
                                     ),
@@ -87,8 +87,8 @@ class TeacherDialog extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 250.w,
-                        height: 250.h,
+                        width: 230.w,
+                        height: 220.h,
                         child: TeacherSearchList(),
                       ),
                     ],

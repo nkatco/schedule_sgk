@@ -76,8 +76,8 @@ class _SettingsPageState extends State<SettingsPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: ScreenUtil().setWidth(48),
-                    height: ScreenUtil().setHeight(34),
+                    width: ScreenUtil().setWidth(44),
+                    height: ScreenUtil().setHeight(30),
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(10),
@@ -87,8 +87,8 @@ class _SettingsPageState extends State<SettingsPage>
                         navigateToProfile(context);
                       },
                       icon: Image.asset('assets/back.png',
-                          width: ScreenUtil().setWidth(14),
-                          height: ScreenUtil().setHeight(14)),
+                          width: ScreenUtil().setWidth(10),
+                          height: ScreenUtil().setHeight(10)),
                     ),
                   ),
                   Text(
@@ -96,7 +96,7 @@ class _SettingsPageState extends State<SettingsPage>
                     style: TextStyle(
                       color: Theme.of(context).textTheme.labelMedium?.color,
                       fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                      fontSize: ScreenUtil().setSp(13.5),
+                      fontSize: ScreenUtil().setSp(11),
                     ),
                   ),
                   Container(
@@ -134,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage>
                             style: TextStyle(
                               color: Theme.of(context).textTheme.labelMedium?.color,
                               fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                              fontSize: ScreenUtil().setSp(14),
+                              fontSize: ScreenUtil().setSp(10),
                             ),
                           ),
                         ),
@@ -142,10 +142,11 @@ class _SettingsPageState extends State<SettingsPage>
                           margin: EdgeInsets.fromLTRB(
                               0,
                               0,
-                              ScreenUtil().setWidth(10),
+                              ScreenUtil().setWidth(11),
                               0),
                           child: Switch(
                               value: switchValue,
+                              materialTapTargetSize: MaterialTapTargetSize.padded,
                               onChanged: (value) {
                                 setState(() {
                                   _themeBloc.add(ToggleTheme());

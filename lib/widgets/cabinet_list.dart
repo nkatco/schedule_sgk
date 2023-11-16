@@ -109,7 +109,7 @@ class CabinetList extends StatelessWidget {
                                 style: TextStyle(
                                   color: Theme.of(context).textTheme.labelMedium?.color,
                                   fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                  fontSize: ScreenUtil().setSp(13),
+                                  fontSize: ScreenUtil().setSp(12),
                                 ),
                               ),
                               if (state.loadedCabinet[index]?.favorite == true)

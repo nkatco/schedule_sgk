@@ -75,8 +75,8 @@ class _ProfilePageState extends State<ProfilePage>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: ScreenUtil().setWidth(48),
-              height: ScreenUtil().setHeight(34),
+              width: ScreenUtil().setWidth(44),
+              height: ScreenUtil().setHeight(30),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(10),
@@ -86,8 +86,8 @@ class _ProfilePageState extends State<ProfilePage>
                   navigateToMain(context);
                 },
                 icon: Image.asset('assets/back.png',
-                    width: ScreenUtil().setWidth(14),
-                    height: ScreenUtil().setHeight(14)),
+                    width: ScreenUtil().setWidth(10),
+                    height: ScreenUtil().setHeight(10)),
               ),
             ),
             Text(
@@ -95,12 +95,12 @@ class _ProfilePageState extends State<ProfilePage>
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelMedium?.color,
                 fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                fontSize: ScreenUtil().setSp(13),
+                fontSize: ScreenUtil().setSp(10.5),
               ),
             ),
             Container(
-              width: ScreenUtil().setWidth(48),
-              height: ScreenUtil().setHeight(34),
+              width: ScreenUtil().setWidth(44),
+              height: ScreenUtil().setHeight(30),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(10),
@@ -111,8 +111,8 @@ class _ProfilePageState extends State<ProfilePage>
                 },
                 icon: Image.asset(
                   'assets/settings.png',
-                  width: ScreenUtil().setWidth(14),
-                  height: ScreenUtil().setHeight(14),
+                  width: ScreenUtil().setWidth(10),
+                  height: ScreenUtil().setHeight(10),
                 ),
               ),
             ),

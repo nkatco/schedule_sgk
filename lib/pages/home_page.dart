@@ -133,11 +133,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             onPressed: () {
                               _showDialog();
                             },
-                            icon: Image.asset('assets/glass.png', width: ScreenUtil().setWidth(12), height: ScreenUtil().setHeight(12)),
+                            icon: Image.asset('assets/glass.png', width: ScreenUtil().setWidth(10), height: ScreenUtil().setHeight(10)),
                             label: Text('Поиск', style: TextStyle(
                                 color: Theme.of(context).textTheme.labelMedium?.color,
                                 fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                fontSize: ScreenUtil().setSp(12)
+                                fontSize: ScreenUtil().setSp(10)
                             ),
                             )
                         ),
@@ -162,11 +162,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               Text('Профиль', style: TextStyle(
                                   color: Theme.of(context).textTheme.labelMedium?.color,
                                   fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                  fontSize: ScreenUtil().setSp(12)
+                                  fontSize: ScreenUtil().setSp(10)
                               ),
                               ),
                               SizedBox(width: ScreenUtil().setWidth(4)),
-                              Image.asset('assets/person.png', width: ScreenUtil().setWidth(12), height: ScreenUtil().setHeight(12)),
+                              Image.asset('assets/person.png', width: ScreenUtil().setWidth(10), height: ScreenUtil().setHeight(10)),
                             ],
                           ),
                           icon: SizedBox(width: 0, height: 0),

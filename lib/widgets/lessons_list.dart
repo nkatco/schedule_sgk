@@ -28,22 +28,13 @@ class LessonList extends StatelessWidget {
       Group? group = item as Group?;
       if (group?.favorite == true) {
         group?.favorite = false;
+        favoritesRepository.deleteFavorite(item.getKey());
       } else {
         group?.favorite = true;
+        favoritesRepository.insertFavorite(item.getKey());
       }
       GroupDAO groupDAO = GroupDAO();
       groupDAO.modifyFavoriteGroup(group!);
-    } else if (item is Teacher) {
-      Teacher? teacher = item as Teacher?;
-      if (teacher?.favorite == true) {
-        teacher?.favorite = false;
-        favoritesRepository.deleteFavorite(item.getKey());
-      } else {
-        teacher?.favorite = true;
-        favoritesRepository.insertFavorite(item.getKey());
-      }
-      TeacherDAO teacherDAO = TeacherDAO();
-      teacherDAO.modifyFavoriteTeacher(teacher!);
     } else if (item is Teacher) {
       Teacher? teacher = item as Teacher?;
       if (teacher?.favorite == true) {
@@ -90,7 +81,7 @@ class LessonList extends StatelessWidget {
                     style: TextStyle(
                       color: Theme.of(context).textTheme.labelMedium?.color,
                       fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                     ),
                   ),
                 ),
@@ -120,7 +111,7 @@ class LessonList extends StatelessWidget {
                       style: TextStyle(
                         color: Theme.of(context).textTheme.labelMedium?.color,
                         fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                        fontSize: 15.sp,
+                        fontSize: 13.sp,
                       ),
                     ),
                   ),
@@ -157,6 +148,7 @@ class LessonList extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
+                                margin: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0.h),
                                 child: Text(
                                   '${state.loadedLesson[index]?.num ?? "Неизвестно"}',
                                   style: TextStyle(
@@ -165,7 +157,6 @@ class LessonList extends StatelessWidget {
                                     fontSize: 12.sp,
                                   ),
                                 ),
-                                margin: EdgeInsets.fromLTRB(20.w, 0.h, 0.w, 0.h),
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -182,7 +173,7 @@ class LessonList extends StatelessWidget {
                                         style: TextStyle(
                                           color: Theme.of(context).textTheme.labelMedium?.color,
                                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                          fontSize: 11.5.sp,
+                                          fontSize: 10.5.sp,
                                         ),
                                       ),
                                     ),
@@ -199,7 +190,7 @@ class LessonList extends StatelessWidget {
                                         style: TextStyle(
                                           color: Theme.of(context).textTheme.labelMedium?.color,
                                           fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                          fontSize: 11.sp,
+                                          fontSize: 10.sp,
                                         ),
                                       ),
                                     ),
@@ -216,7 +207,7 @@ class LessonList extends StatelessWidget {
                                       style: TextStyle(
                                         color: Theme.of(context).textTheme.labelMedium?.color,
                                         fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                        fontSize: 10.sp,
+                                        fontSize: 10.5.sp,
                                       ),
                                     ),
                                   ),
@@ -227,7 +218,7 @@ class LessonList extends StatelessWidget {
                                       style: TextStyle(
                                         color: Theme.of(context).textTheme.labelMedium?.color,
                                         fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                        fontSize: 9.sp,
+                                        fontSize: 10.sp,
                                       ),
                                     ),
                                   ),

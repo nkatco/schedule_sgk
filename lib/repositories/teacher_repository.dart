@@ -1,3 +1,4 @@
+import 'package:fuzzy/fuzzy.dart';
 import 'package:schedule_sgk/DAO/teacher_dao.dart';
 import 'package:schedule_sgk/models/teacher.dart';
 import 'package:schedule_sgk/services/teacher_api_provider.dart';
@@ -30,8 +31,25 @@ class TeachersRepository {
       return cachedTeachers;
     }
 
-    return cachedTeachers
-        .where((teacher) => teacher.name.toLowerCase().contains(searchTerm.toLowerCase()))
-        .toList();
+    List<Teacher> newTeachers = List.empty();
+
+    var fuse = Fuzzy(
+      cachedTeachers,
+      options: FuzzyOptions(
+        keys: [
+          WeightedKey(
+            getter: (Teacher item) => item.name,
+            weight: 1.0,
+            name: 'name',
+          ),
+        ],
+        findAllMatches: true,
+        tokenize: true,
+        threshold: 0.3,
+      ),
+    );
+    var results = fuse.search(searchTerm);
+    newTeachers = results.map((result) => result.item).toList();
+    return newTeachers;
   }
 }

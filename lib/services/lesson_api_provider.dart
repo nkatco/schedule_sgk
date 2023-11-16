@@ -26,8 +26,10 @@ class LessonProvider {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(utf8.decode(response.bodyBytes));
         final List<dynamic> lessonJsonList = responseData['lessons'];
-        final List<Lesson> lessons = lessonJsonList.map((lessonJson) => Lesson.fromJson(lessonJson)).toList();
-        bool isMonday = DateTime.now().weekday == DateTime.monday;
+        List<Lesson> lessons = lessonJsonList.map((lessonJson) => Lesson.fromJson(lessonJson)).toList();
+        if(DateTime.parse(date).weekday == DateTime.monday && lessons[0].num == 1) {
+          lessons = await _addLessonAtBeginning(lessons, DateTime.parse(date));
+        }
         return lessons;
       } else {
         throw Exception('Error fetching lessons. Status code: ${response.statusCode}');
@@ -36,5 +38,22 @@ class LessonProvider {
       print("Error in getLesson: $error");
       throw Exception('Error fetching lessons');
     }
+  }
+   Future<List<Lesson>> _addLessonAtBeginning(List<Lesson> lessons, DateTime dateTime) async {
+    bool isMonday = dateTime.weekday == DateTime.monday;
+    print('${dateTime.toString()} | ${dateTime.weekday}');
+
+    if (isMonday && lessons.isNotEmpty && lessons.first.num == 1) {
+      List<Lesson> newLessons = lessons;
+      Lesson newLesson = Lesson(
+          num: 0,
+          title: 'Разговоры о важном',
+          cab: lessons[0].cab,
+          teacherName: lessons[0].teacherName
+      );
+      newLessons.insert(0, newLesson);
+      return newLessons;
+    }
+    return lessons;
   }
 }
