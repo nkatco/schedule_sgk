@@ -25,6 +25,8 @@ class LessonsPage extends StatefulWidget {
 class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStateMixin {
   final lessonRepository = LessonsRepository();
   late LessonBloc _lessonBloc;
+  late double _position = 0.0;
+  late double _startPosition = 0.0;
 
   final Item item;
   String date;
@@ -104,73 +106,105 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-
     return BlocProvider<LessonBloc>(
-      create: (BuildContext context) => _lessonBloc,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          toolbarHeight: ScreenUtil().setHeight(100),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  navigateToHome(context);
-                },
-                icon: Image.asset(
-                    'assets/back.png',
-                    width: ScreenUtil().setWidth(10),
-                    height: ScreenUtil().setHeight(10)),
-                label: Text(
-                  'На главную',
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.labelMedium?.color,
-                    fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                    fontSize: ScreenUtil().setSp(10),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, ScreenUtil().setWidth(20), 0),
-                child: Image.asset(
-                  'assets/logo.png',
-                  width: ScreenUtil().setWidth(100),
-                  height: ScreenUtil().setHeight(100),
-                ),
-              ),
-              Column(
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      _selectDate(context);
-                    },
-                    label: Row(
-                      children: [
-                        Text(
-                          formatDateTime(DateTime.parse(date)),
+        create: (BuildContext context) => _lessonBloc,
+        child: GestureDetector(
+            onHorizontalDragStart: (details) {
+              _startPosition = details.globalPosition.dx;
+            },
+            onHorizontalDragUpdate: (details) {
+              setState(() {
+                _position = details.globalPosition.dx - _startPosition;
+              });
+            },
+            onHorizontalDragEnd: (details) {
+              if (_position > MediaQuery.of(context).size.width / 2) {
+                setState(() {
+                  _position = 0.0;
+                  DateTime dateTime = DateTime.parse(date);
+                  dateTime = dateTime.subtract(const Duration(days: 1));
+                  date = DateFormat('yyyy-MM-dd').format(dateTime);
+                });
+                _lessonBloc.add(LessonLoadEvent(item: item, date: date));
+              } else {
+                setState(() {
+                  _position = 0.0;
+                  DateTime dateTime = DateTime.parse(date);
+                  dateTime = dateTime.add(const Duration(days: 1));
+                  date = DateFormat('yyyy-MM-dd').format(dateTime);
+                });
+                _lessonBloc.add(LessonLoadEvent(item: item, date: date));
+              }
+            },
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              transform: Matrix4.translationValues(_position, 0.0, 0.0),
+              child: Scaffold(
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  elevation: 0,
+                  toolbarHeight: ScreenUtil().setHeight(100),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          navigateToHome(context);
+                        },
+                        icon: Image.asset(
+                            'assets/back.png',
+                            width: ScreenUtil().setWidth(10),
+                            height: ScreenUtil().setHeight(10)),
+                        label: Text(
+                          'На главную',
                           style: TextStyle(
                             color: Theme.of(context).textTheme.labelMedium?.color,
                             fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                            fontSize: ScreenUtil().setSp(11),
+                            fontSize: ScreenUtil().setSp(10),
                           ),
                         ),
-                        SizedBox(width: ScreenUtil().setWidth(4)),
-                        Image.asset('assets/calendar.png', width: ScreenUtil().setWidth(12), height: ScreenUtil().setHeight(12)),
-                      ],
-                    ),
-                    icon: const SizedBox(width: 0, height: 0),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, ScreenUtil().setWidth(20), 0),
+                        child: Image.asset(
+                          'assets/logo.png',
+                          width: ScreenUtil().setWidth(100),
+                          height: ScreenUtil().setHeight(100),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              _selectDate(context);
+                            },
+                            label: Row(
+                              children: [
+                                Text(
+                                  formatDateTime(DateTime.parse(date)),
+                                  style: TextStyle(
+                                    color: Theme.of(context).textTheme.labelMedium?.color,
+                                    fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                                    fontSize: ScreenUtil().setSp(11),
+                                  ),
+                                ),
+                                SizedBox(width: ScreenUtil().setWidth(4)),
+                                Image.asset('assets/calendar.png', width: ScreenUtil().setWidth(12), height: ScreenUtil().setHeight(12)),
+                              ],
+                            ),
+                            icon: const SizedBox(width: 0, height: 0),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
+                ),
+                body: Container(
+                  child: LessonList(item: item, dateTime: DateTime.parse(date)),
+                ),
               ),
-            ],
-          ),
-        ),
-        body: Container(
-          child: LessonList(item: item, dateTime: DateTime.parse(date)),
-        ),
-      ),
+            )
+        )
     );
   }
 }

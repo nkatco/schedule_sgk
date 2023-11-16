@@ -17,6 +17,8 @@ class _SettingsPageState extends State<SettingsPage>
     with SingleTickerProviderStateMixin {
   late bool switchValue = false;
   late ThemeBloc _themeBloc;
+  late double _position = 0.0;
+  late double _startPosition = 0.0;
 
   @override
   void initState() {
@@ -56,7 +58,6 @@ class _SettingsPageState extends State<SettingsPage>
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-
     return BlocProvider<ThemeBloc>(
       create: (context) => _themeBloc,
       child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -67,98 +68,124 @@ class _SettingsPageState extends State<SettingsPage>
           if (state is ThemeLoaded) {
             switchValue = state.newTheme;
           }
-          return Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              toolbarHeight: ScreenUtil().setHeight(100),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: ScreenUtil().setWidth(44),
-                    height: ScreenUtil().setHeight(30),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        navigateToProfile(context);
-                      },
-                      icon: Image.asset('assets/back.png',
-                          width: ScreenUtil().setWidth(10),
-                          height: ScreenUtil().setHeight(10)),
-                    ),
-                  ),
-                  Text(
-                    'Настройки',
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.labelMedium?.color,
-                      fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                      fontSize: ScreenUtil().setSp(11),
-                    ),
-                  ),
-                  Container(
-                    width: ScreenUtil().setWidth(50),
-                    height: ScreenUtil().setHeight(38),
-                  )
-                ],
-              ),
-            ),
-            body: Column(
-              children: [
-                Center(
-                  child: Container(
-                    height: ScreenUtil().setHeight(60),
-                    margin: EdgeInsets.fromLTRB(
-                        ScreenUtil().setWidth(20),
-                        ScreenUtil().setHeight(20),
-                        ScreenUtil().setWidth(20),
-                        0),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(
-                              ScreenUtil().setWidth(20),
-                              0,
-                              0,
-                              0),
-                          child: Text(
-                            'Тема',
+          return GestureDetector(
+              onHorizontalDragStart: (details) {
+                _startPosition = details.globalPosition.dx;
+              },
+              onHorizontalDragUpdate: (details) {
+                setState(() {
+                  _position = details.globalPosition.dx - _startPosition;
+                });
+              },
+              onHorizontalDragEnd: (details) {
+                if (_position > MediaQuery.of(context).size.width / 2) {
+                  setState(() {
+                    _position = 0.0;
+                  });
+                  navigateToProfile(context);
+                } else {
+                  setState(() {
+                    _position = 0.0;
+                  });
+                }
+              },
+              child: AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  transform: Matrix4.translationValues(_position, 0.0, 0.0),
+                  child: Scaffold(
+                    appBar: AppBar(
+                      automaticallyImplyLeading: false,
+                      elevation: 0,
+                      toolbarHeight: ScreenUtil().setHeight(100),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: ScreenUtil().setWidth(44),
+                            height: ScreenUtil().setHeight(30),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                navigateToProfile(context);
+                              },
+                              icon: Image.asset('assets/back.png',
+                                  width: ScreenUtil().setWidth(10),
+                                  height: ScreenUtil().setHeight(10)),
+                            ),
+                          ),
+                          Text(
+                            'Настройки',
                             style: TextStyle(
                               color: Theme.of(context).textTheme.labelMedium?.color,
                               fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                              fontSize: ScreenUtil().setSp(10),
+                              fontSize: ScreenUtil().setSp(11),
                             ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(
-                              0,
-                              0,
-                              ScreenUtil().setWidth(11),
-                              0),
-                          child: Switch(
-                              value: switchValue,
-                              materialTapTargetSize: MaterialTapTargetSize.padded,
-                              onChanged: (value) {
-                                setState(() {
-                                  _themeBloc.add(ToggleTheme());
-                                });
-                              }),
+                          Container(
+                            width: ScreenUtil().setWidth(50),
+                            height: ScreenUtil().setHeight(38),
+                          )
+                        ],
+                      ),
+                    ),
+                    body: Column(
+                      children: [
+                        Center(
+                          child: Container(
+                            height: ScreenUtil().setHeight(60),
+                            margin: EdgeInsets.fromLTRB(
+                                ScreenUtil().setWidth(20),
+                                ScreenUtil().setHeight(20),
+                                ScreenUtil().setWidth(20),
+                                0),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      ScreenUtil().setWidth(20),
+                                      0,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    'Тема',
+                                    style: TextStyle(
+                                      color: Theme.of(context).textTheme.labelMedium?.color,
+                                      fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                                      fontSize: ScreenUtil().setSp(10),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      0,
+                                      0,
+                                      ScreenUtil().setWidth(11),
+                                      0),
+                                  child: Switch(
+                                      value: switchValue,
+                                      materialTapTargetSize: MaterialTapTargetSize.padded,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _themeBloc.add(ToggleTheme());
+                                        });
+                                      }),
+                                )
+                              ],
+                            ),
+                          ),
                         )
                       ],
                     ),
-                  ),
-                )
-              ],
-            ),
+                  )
+              )
           );
         },
       ),
