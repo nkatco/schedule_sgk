@@ -19,6 +19,21 @@ class TeachersRepository {
     return cachedTeachers;
   }
 
+  Future<Teacher?> searchTeacherByKey(String key) async {
+    List<Teacher> teachers = await getAllTeachers();
+    List<Teacher> matchingTeachers = List.empty();
+
+    for (Teacher teacher in teachers) {
+      if (teacher.getKey().toLowerCase().contains(key.toLowerCase())) {
+        matchingTeachers.add(teacher);
+      }
+    }
+    if(matchingTeachers.isNotEmpty) {
+      return matchingTeachers[0];
+    }
+    return null;
+  }
+
   Future<List<Teacher>> searchTeachers(String searchTerm) async {
     List<Teacher> cachedTeachers = _teacherDAO.getCashedTeachers();
 

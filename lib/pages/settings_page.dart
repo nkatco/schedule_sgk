@@ -21,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage>
   late double _startPosition = 0.0;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
     _themeBloc = ThemeBloc();
     _themeBloc.add(LoadTheme());
@@ -156,6 +156,55 @@ class _SettingsPageState extends State<SettingsPage>
                                       0),
                                   child: Text(
                                     'Тема',
+                                    style: TextStyle(
+                                      color: Theme.of(context).textTheme.labelMedium?.color,
+                                      fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
+                                      fontSize: ScreenUtil().setSp(10),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      0,
+                                      0,
+                                      ScreenUtil().setWidth(11),
+                                      0),
+                                  child: Switch(
+                                      value: switchValue,
+                                      materialTapTargetSize: MaterialTapTargetSize.padded,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _themeBloc.add(ToggleTheme());
+                                        });
+                                      }),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            height: ScreenUtil().setHeight(60),
+                            margin: EdgeInsets.fromLTRB(
+                                ScreenUtil().setWidth(20),
+                                ScreenUtil().setHeight(20),
+                                ScreenUtil().setWidth(20),
+                                0),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      ScreenUtil().setWidth(20),
+                                      0,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    'Виджет',
                                     style: TextStyle(
                                       color: Theme.of(context).textTheme.labelMedium?.color,
                                       fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,

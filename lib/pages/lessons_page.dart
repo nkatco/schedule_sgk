@@ -118,7 +118,9 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
               });
             },
             onHorizontalDragEnd: (details) {
-              if (_position > MediaQuery.of(context).size.width / 2) {
+              double velocity = details.primaryVelocity ?? 0;
+
+              if (velocity > 0) {
                 setState(() {
                   _position = 0.0;
                   DateTime dateTime = DateTime.parse(date);
@@ -126,7 +128,7 @@ class _LessonsPageState extends State<LessonsPage> with SingleTickerProviderStat
                   date = DateFormat('yyyy-MM-dd').format(dateTime);
                 });
                 _lessonBloc.add(LessonLoadEvent(item: item, date: date));
-              } else {
+              } else if (velocity < 0) {
                 setState(() {
                   _position = 0.0;
                   DateTime dateTime = DateTime.parse(date);

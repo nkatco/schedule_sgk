@@ -19,6 +19,22 @@ class CabinetsRepository {
 
     return cachedCabinets;
   }
+
+  Future<Cabinet?> searchCabinetsByKey(String key) async {
+    List<Cabinet> cabinets = await getAllCabinets();
+    List<Cabinet> matchingCabinets = List.empty();
+
+    for (Cabinet cabinet in cabinets) {
+      if (cabinet.getKey().toLowerCase().contains(key.toLowerCase())) {
+        matchingCabinets.add(cabinet);
+      }
+    }
+    if(matchingCabinets.isNotEmpty) {
+      return matchingCabinets[0];
+    }
+    return null;
+  }
+
   Future<List<Cabinet>> searchCabinets(String searchTerm) async {
     List<Cabinet> cachedCabinets = _cabinetDAO.getCashedCabinets();
 

@@ -5,7 +5,6 @@ import 'package:schedule_sgk/services/group_api_provider.dart';
 
 class GroupsRepository {
   final GroupProvider _groupsProvider = GroupProvider();
-
   final GroupDAO _groupDAO = GroupDAO();
 
   Future<List<Group>> getAllGroups() async {
@@ -17,6 +16,21 @@ class GroupsRepository {
     }
 
     return cachedGroups;
+  }
+
+  Future<Group?> searchGroupByKey(String key) async {
+    List<Group> groups = await getAllGroups();
+    List<Group> matchingGroups = List.empty();
+
+    for (Group group in groups) {
+      if (group.getKey().toLowerCase().contains(key.toLowerCase())) {
+        matchingGroups.add(group);
+      }
+    }
+    if(matchingGroups.isNotEmpty) {
+      return matchingGroups[0];
+    }
+    return null;
   }
 
   Future<List<Group>> searchGroups(String searchTerm) async {
