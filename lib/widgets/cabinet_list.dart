@@ -80,7 +80,7 @@ class CabinetList extends StatelessWidget {
                           favoritesRepository.deleteFavorite(state.loadedCabinet[index]?.id);
                         } else {
                           state.loadedCabinet[index].favorite = true;
-                          favoritesRepository.insertFavorite(state.loadedCabinet[index]?.id);
+                          favoritesRepository.insertFavorite(state.loadedCabinet[index]?.id, 'cabinet', state.loadedCabinet[index]?.name);
                         }
                         cabinetDAO.modifyFavoriteCabinet(state.loadedCabinet[index]);
                         cabinetBloc.add(CabinetLoadEvent());

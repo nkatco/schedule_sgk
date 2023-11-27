@@ -83,7 +83,7 @@ class TeacherList extends StatelessWidget {
                         favoritesRepository.deleteFavorite(state.loadedTeacher[index]!.id.toString());
                       } else {
                         state.loadedTeacher[index].favorite = true;
-                        favoritesRepository.insertFavorite(state.loadedTeacher[index]!.id.toString());
+                        favoritesRepository.insertFavorite(state.loadedTeacher[index]!.id.toString(), 'teacher', state.loadedTeacher[index]!.name);
                       }
                       teacherDAO.modifyFavoriteTeacher(state.loadedTeacher[index]);
                       teacherBloc.add(TeacherLoadEvent());

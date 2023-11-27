@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../bloc/theme.bloc/theme_bloc.dart';
 import '../bloc/theme.bloc/theme_state.dart';
+import '../widgets/item_selection_widget.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _SettingsPageState extends State<SettingsPage>
   late double _startPosition = 0.0;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
     _themeBloc = ThemeBloc();
     _themeBloc.add(LoadTheme());
@@ -159,7 +160,7 @@ class _SettingsPageState extends State<SettingsPage>
                                     style: TextStyle(
                                       color: Theme.of(context).textTheme.labelMedium?.color,
                                       fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                      fontSize: ScreenUtil().setSp(10),
+                                      fontSize: ScreenUtil().setSp(11),
                                     ),
                                   ),
                                 ),
@@ -208,29 +209,26 @@ class _SettingsPageState extends State<SettingsPage>
                                     style: TextStyle(
                                       color: Theme.of(context).textTheme.labelMedium?.color,
                                       fontFamily: Theme.of(context).textTheme.labelMedium?.fontFamily,
-                                      fontSize: ScreenUtil().setSp(10),
+                                      fontSize: ScreenUtil().setSp(11),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      0,
-                                      0,
-                                      ScreenUtil().setWidth(11),
-                                      0),
-                                  child: Switch(
-                                      value: switchValue,
-                                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _themeBloc.add(ToggleTheme());
-                                        });
-                                      }),
-                                )
+                                IconButton(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) => ItemSelectionWidget(),
+                                    );
+                                  },
+                                  icon: Image.asset('assets/settings.png',
+                                      width: ScreenUtil().setWidth(15),
+                                      height: ScreenUtil().setHeight(15)),
+                                ),
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   )

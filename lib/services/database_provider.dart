@@ -19,10 +19,13 @@ class DatabaseProvider {
 
     return openDatabase(path, version: 1, onCreate: (Database db, int version) async {
       await db.execute('''
-        CREATE TABLE IF NOT EXISTS Favorites (
-          key TEXT PRIMARY KEY
-        )
-      ''');
+      CREATE TABLE IF NOT EXISTS Favorites (
+        key TEXT PRIMARY KEY,
+        type TEXT,
+        author TEXT
+      )
+    ''');
     });
   }
+
 }

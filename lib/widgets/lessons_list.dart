@@ -31,7 +31,7 @@ class LessonList extends StatelessWidget {
         favoritesRepository.deleteFavorite(item.getKey());
       } else {
         group?.favorite = true;
-        favoritesRepository.insertFavorite(item.getKey());
+        favoritesRepository.insertFavorite(item.getKey(), 'group', item.getAuthor());
       }
       GroupDAO groupDAO = GroupDAO();
       groupDAO.modifyFavoriteGroup(group!);
@@ -42,7 +42,7 @@ class LessonList extends StatelessWidget {
         favoritesRepository.deleteFavorite(item.getKey());
       } else {
         teacher?.favorite = true;
-        favoritesRepository.insertFavorite(item.getKey());
+        favoritesRepository.insertFavorite(item.getKey(), 'teacher', item.getAuthor());
       }
       TeacherDAO teacherDAO = TeacherDAO();
       teacherDAO.modifyFavoriteTeacher(teacher!);
@@ -53,7 +53,7 @@ class LessonList extends StatelessWidget {
         favoritesRepository.deleteFavorite(item.getKey());
       } else {
         cabinet?.favorite = true;
-        favoritesRepository.insertFavorite(item.getKey());
+        favoritesRepository.insertFavorite(item.getKey(), 'cabinet', item.getAuthor());
       }
       CabinetDAO cabinetDAO = CabinetDAO();
       cabinetDAO.modifyFavoriteCabinet(cabinet!);

@@ -83,7 +83,7 @@ class GroupList extends StatelessWidget {
                         favoritesRepository.deleteFavorite(state.loadedGroup[index]!.id.toString());
                       } else {
                         state.loadedGroup[index].favorite = true;
-                        favoritesRepository.insertFavorite(state.loadedGroup[index]!.id.toString());
+                        favoritesRepository.insertFavorite(state.loadedGroup[index]!.id.toString(), 'group', state.loadedGroup[index]?.name);
                       }
                       groupDAO.modifyFavoriteGroup(state.loadedGroup[index]);
                       groupBloc.add(GroupLoadEvent());
