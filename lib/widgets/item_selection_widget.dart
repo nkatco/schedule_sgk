@@ -56,8 +56,8 @@ class _ItemSelectionWidgetState extends State<ItemSelectionWidget> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
             child: Text(
               'Выбранный предмет будет отображаться в виджете',
               textAlign: TextAlign.center,
