@@ -1,6 +1,5 @@
 package org.katco.schedule_sgk
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -14,46 +13,44 @@ class ApiService {
 
     private val client = OkHttpClient()
 
-    suspend fun getGroupScheduleAsync(groupKey: String, date: String): Any? {
+    suspend fun getGroupSchedule(groupKey: String, date: String): List<Lesson> {
+        val url = "https://asu.samgk.ru/api/schedule/$groupKey/$date"
+        println(url)
         return withContext(Dispatchers.IO) {
-            val url = "https://asu.samgk.ru/api/schedule/$groupKey/$date"
-            println(url)
-            val response = fetchData(url)
-            parseResponse(response)
+            fetchData(url)
         }
     }
 
-    suspend fun getTeacherScheduleAsync(teacherKey: String, date: String): List<Lesson> {
+    suspend fun getTeacherSchedule(teacherKey: String, date: String): List<Lesson> {
+        val url = "https://asu.samgk.ru/api/schedule/teacher/$date/$teacherKey"
+        println(url)
         return withContext(Dispatchers.IO) {
-            val url = "https://asu.samgk.ru/api/schedule/teacher/$date/$teacherKey"
-            println(url)
-            val response = fetchData(url)
-            parseResponse(response)
+            fetchData(url)
         }
     }
 
-    suspend fun getCabinetScheduleAsync(cabinetKey: String, date: String): Any? {
+    suspend fun getCabinetSchedule(cabinetKey: String, date: String): List<Lesson> {
+        val url = "https://asu.samgk.ru/api/schedule/cabs/$date/cabNum/$cabinetKey"
+        println(url)
         return withContext(Dispatchers.IO) {
-            val url = "https://asu.samgk.ru/api/schedule/cabs/$date/cabNum/$cabinetKey"
-            println(url)
-            val response = fetchData(url)
-            parseResponse(response)
+            fetchData(url)
         }
     }
 
-    private fun fetchData(url: String): String {
-        val request = Request.Builder()
-                .url(url)
-                .build()
+    private suspend fun fetchData(url: String): List<Lesson> {
+        try {
+            val request = Request.Builder()
+                    .url(url)
+                    .build()
 
-        return try {
             val response = client.newCall(request).execute()
             println(response.body)
-            response.body?.string() ?: ""
+            val responseBody = response.body?.string() ?: ""
+            return parseResponse(responseBody)
         } catch (e: IOException) {
             e.printStackTrace()
-            ""
         }
+        return emptyList()
     }
 
     private fun parseResponse(response: String): List<Lesson> {
@@ -68,19 +65,19 @@ class ApiService {
                 for (i in 0 until lessonsArray.length()) {
                     val jsonLesson: JSONObject = lessonsArray.getJSONObject(i)
                     val lesson = Lesson(
-                        title = jsonLesson.optString("title", ""),
-                        num = jsonLesson.optInt("num", 0),
-                        teacherName = jsonLesson.optString("teachername", ""),
-                        cab = jsonLesson.optString("cab", "")
+                            title = jsonLesson.optString("title", ""),
+                            num = jsonLesson.optInt("num", 0),
+                            teacherName = jsonLesson.optString("teachername", ""),
+                            cab = jsonLesson.optString("cab", "")
                     )
                     lessons.add(lesson)
                 }
+                return lessons
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e("ApiService", "Error parsing response: ${e.message}", e)
         }
 
-        return lessons
+        return emptyList()
     }
 }

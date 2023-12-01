@@ -51,31 +51,35 @@ class ScheduleFactory(private val context: Context, intent: Intent) : RemoteView
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onDataSetChanged() {
-        data.clear()
-        val sharedPreferencesName = "FlutterSharedPreferences"
-        val pref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
-        val widgetKey = pref.getString("widget_key", "") ?: ""
-        val widgetType = pref.getString("widget_type", "")
+        kotlin.io.println("TEST!")
+        kotlinx.coroutines.runBlocking {
+            kotlin.io.println("TEST!")
+            data.clear()
+            val sharedPreferencesName = "FlutterSharedPreferences"
+            val pref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+            val widgetKey = pref.getString("widget_key", "") ?: ""
+            val widgetType = pref.getString("widget_type", "")
 
-        GlobalScope.launch {
-            try {
-                when (widgetType?.toLowerCase()) {
-                    "group" -> {
-                        val result = ApiService().getGroupScheduleAsync(widgetKey, getCurrentDate())
-                        data.addAll(result as List<Lesson>)
-                    }
-                    "teacher" -> {
-                        val result = ApiService().getTeacherScheduleAsync(widgetKey, getCurrentDate())
-                        data.addAll(result)
-                    }
-                    "cabinet" -> {
-                        val result = ApiService().getCabinetScheduleAsync(widgetKey, getCurrentDate())
-                        data.addAll(result as List<Lesson>)
-                    }
+            when (widgetType?.toLowerCase()) {
+                "group" -> {
+                    data.addAll(ApiService().getGroupSchedule(widgetKey, getCurrentDate()))
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+                "teacher" -> {
+                    data.addAll(ApiService().getTeacherSchedule(widgetKey, getCurrentDate()))
+                }
+                "cabinet" -> {
+                    data.addAll(ApiService().getCabinetSchedule(widgetKey, getCurrentDate()))
+                }
+                else -> {
+                    // Handle the case when widgetType is not one of the known types
+                }
             }
+
+            kotlin.io.println(data.size) // This line is now inside the block
+
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val appWidgetIds = intArrayOf(widgetID)
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.lvList)
         }
     }
 
